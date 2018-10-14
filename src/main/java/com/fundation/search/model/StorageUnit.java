@@ -8,7 +8,14 @@
 
 package com.fundation.search.model;
 
+/**
+ * @autor: maramirez
+ * Project: File_Search_B
+ * Package: com.fundation.search.model
+ * Version: 1.0
+ **/
 public abstract class StorageUnit {
+
     protected String name;
     protected String size;
     protected String path;

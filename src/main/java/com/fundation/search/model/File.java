@@ -8,13 +8,38 @@
 
 package com.fundation.search.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * @autor: Admin
+ * @autor: maramirez
  * Project: File_Search_B
  * Package: com.fundation.search.model
  * Version: 1.0
  **/
-public class File {
+public class File extends StorageUnit {
+
+    protected String extension;
+    protected List<String> keywords = new ArrayList<String>();
+
+    public String get_extension() {
+        return this.extension;
+    }
+
+    public List<String> get_keywords() {
+        return this.keywords;
+    }
+
+
+    public void set_extension (String extension) {
+        this.extension = extension;
+    }
+
+    public void set_keywords (List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+
     public static void main(String[] args) {
         System.out.print("test");
     }
