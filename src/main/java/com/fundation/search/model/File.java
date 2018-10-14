@@ -8,8 +8,14 @@
 
 package com.fundation.search.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @autor: maramirez
@@ -41,6 +47,21 @@ public class File extends StorageUnit {
 
 
     public static void main(String[] args) {
-        System.out.print("test");
+
+        Path path = Paths.get("/TrabajosLocal/stash/File_Search_B/src");
+
+        try {
+            List<Path> test = Files.walk(path)
+                    .map(Path::getFileName)
+                    .sorted()
+                    .collect(Collectors.toList());
+
+            for(Path item: test) {
+                System.out.println(item);
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
