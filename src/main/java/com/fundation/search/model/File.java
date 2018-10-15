@@ -26,32 +26,38 @@ public class File extends StorageUnit {
     protected String extension;
     protected List<String> keywords = new ArrayList<String>();
 
-    public String get_extension() {
+    public String getExtension() {
         return this.extension;
     }
 
-    public List<String> get_keywords() {
+    public List<String> getKeywords() {
         return this.keywords;
     }
 
 
-    public void set_extension (String extension) {
+    public void setExtension (String extension) {
         this.extension = extension;
     }
 
-    public void set_keywords (List<String> keywords) {
+    public void setKeywords (List<String> keywords) {
         this.keywords = keywords;
     }
 
 
-    public static void main(String[] args) throws IOException  {
+    public static void main(String[] args) throws IOException {
 
-        Path path = Paths.get("C:\\Users\\Admin\\Documents\\stash\\File_Search_B\\src");
+        Path path = Paths.get("/TrabajosLocal/stash/File_Search_B/src/main/java");
 
         Files.list(path)
                 .limit(50)
                 .forEach(pat -> {
                     System.out.println(pat.getName(pat.getNameCount() - 1));
+                    try {
+                        System.out.println(Files.size(pat));
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 });
 
 //        try {

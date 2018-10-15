@@ -6,23 +6,18 @@
  *
  */
 
-package com.fundation.search.model;
-/*
+package com.fundation.search.model;/*
  * @autor: mauricioramirez
  * Project: File_Search_B
  * Package: com.fundation.search.model
  * Version: 1.0
-*/
+ */
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Folder extends StorageUnit{
-
-    protected List<File> files = new ArrayList<File>();
-    protected List<Folder> subfolders = new ArrayList<Folder>();
-
-    public void validatePath() {
-
-    }
+public class Search {
+    List<StorageUnit> itemsList = new ArrayList<StorageUnit>();
+    String path;
+    String searchText;
 }

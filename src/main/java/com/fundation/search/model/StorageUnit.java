@@ -8,6 +8,8 @@
 
 package com.fundation.search.model;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 
@@ -20,70 +22,68 @@ import java.nio.file.Path;
 public abstract class StorageUnit {
 
     protected String name;
-    protected String size;
+    protected Long size;
     protected Path path;
     protected String type;
     protected String owner;
-    protected String created_at;
-    protected String updated_at;
+    protected String createdAt;
+    protected String updatedAt;
 
-    public void set_name (String name) {
+    public void setName (String name) {
         this.name = name;
     }
 
-    public void set_size (String size) {
-        this.size = size;
+    public void setSize (Long size) throws IOException {
+//        this.size = Files.size(this.path);
     }
 
-    public void set_path (String path) {
+    public void setPath (String path) {
         this.path = Paths.get(path);
-
-
     }
 
-    public void set_type (String type) {
+    public void setType (String type) {
         this.type = type;
     }
 
-    public void set_owner (String owner) {
+    public void setOwner (String owner) {
         this.owner = owner;
     }
 
-    public void set_created_at (String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt (String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public void set_updated_at (String updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt (String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
 
-    public String get_name () {
+    public String getName () {
         return this.name;
     }
 
-    public String get_size () {
+    public Long getSize () {
         return this.size;
     }
 
-    public String get_path () {
+    public Path getPath () {
         return this.path;
     }
 
-    public String get_type () {
+    public String getType () {
         return this.type;
     }
 
-    public String get_owner () {
+    public String getOwner () {
         return this.owner;
     }
 
-    public String get_created_at () {
-        return this.created_at;
+    public String getCreatedAt () {
+        return this.createdAt;
     }
 
-    public String get_updated_at () {
-        return this.updated_at;
+    public String getUpdatedAt () {
+        return this.updatedAt;
     }
 
 }
