@@ -21,4 +21,8 @@ public class Folder extends StorageUnit{
 
     protected List<File> files = new ArrayList<File>();
     protected List<Folder> subfolders = new ArrayList<Folder>();
+
+    public void validate_path() {
+
+    }
 }

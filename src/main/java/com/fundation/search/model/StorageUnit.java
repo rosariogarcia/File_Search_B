@@ -8,6 +8,9 @@
 
 package com.fundation.search.model;
 
+import java.nio.file.Paths;
+import java.nio.file.Path;
+
 /**
  * @autor: maramirez
  * Project: File_Search_B
@@ -18,7 +21,7 @@ public abstract class StorageUnit {
 
     protected String name;
     protected String size;
-    protected String path;
+    protected Path path;
     protected String type;
     protected String owner;
     protected String created_at;
@@ -33,7 +36,9 @@ public abstract class StorageUnit {
     }
 
     public void set_path (String path) {
-        this.path = path;
+        this.path = Paths.get(path);
+
+
     }
 
     public void set_type (String type) {
