@@ -14,7 +14,7 @@ public class View extends JFrame{
     private void setting(){
         setTitle("Search");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(215,  195);
+        setSize(415,  305);
 
 
     }
@@ -28,6 +28,5 @@ public class View extends JFrame{
 
     public static void main(String[] args){
         View view = new View();
-
     }
 }
