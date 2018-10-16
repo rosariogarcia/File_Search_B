@@ -28,23 +28,22 @@ public class Search {
     public List<StorageUnit> searchItems(String path, String searchText, Integer limit) throws IOException {
         this.itemsList.clear();
         limit = limit == null ? 100 : limit;
+        String searchString = (searchText == null || searchText.equals("")) ? "*" : searchText;
 
         this.path = Paths.get(path);
 
         if (Files.isDirectory(this.path)) {
             Files.walk(this.path)
                     .limit(limit)
-                    .forEach(unit -> {
+                    .forEach(unitPath -> {
 
-                        if (unit.getFileName()
+                        if (unitPath.getFileName()
                                 .toString()
                                 .toLowerCase()
-                                .contains(searchText.toLowerCase())) {
-
-                            Path unitPath = unit;
+                                .contains(searchString.toLowerCase()) || searchString.equals("*")) {
 
                             try {
-                                StorageUnit item = new StorageUnit();
+                                StorageUnit item;
 
                                 if (Files.isDirectory(unitPath)) {
                                     item = new Folder();
@@ -78,6 +77,6 @@ public class Search {
     public static void main(String[] args) throws IOException {
         Search test = new Search();
 
-        test.searchItems("/TrabajosLocal/stash/File_Search_B/src/main/java/com/fundation/search", "stor", null);
+        test.searchItems("/TrabajosLocal/stash/File_Search_B/src/main/java/com/fundation/search", "f", null);
     }
 }
