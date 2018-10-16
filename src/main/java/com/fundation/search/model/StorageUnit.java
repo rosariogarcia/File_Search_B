@@ -19,7 +19,7 @@ import java.nio.file.Path;
  * Package: com.fundation.search.model
  * Version: 1.0
  **/
-public abstract class StorageUnit {
+public class StorageUnit {
 
     protected String name;
     protected Long size;
@@ -28,6 +28,10 @@ public abstract class StorageUnit {
     protected String owner;
     protected String createdAt;
     protected String updatedAt;
+
+    public StorageUnit () {
+
+    }
 
     public void setName (String name) {
         this.name = name;

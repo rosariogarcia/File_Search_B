@@ -14,6 +14,8 @@ package com.fundation.search.model;
  * Version: 1.0
 */
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,6 @@ public class Folder extends StorageUnit{
     protected List<File> files = new ArrayList<File>();
     protected List<Folder> subfolders = new ArrayList<Folder>();
 
-    public void validatePath() {
-
+    public void validatePath() throws IOException {
     }
 }

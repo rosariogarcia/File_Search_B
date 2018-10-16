@@ -46,9 +46,9 @@ public class File extends StorageUnit {
 
     public static void main(String[] args) throws IOException {
 
-        Path path = Paths.get("/TrabajosLocal/stash/File_Search_B/src/main/java");
+        Path path = Paths.get("/TrabajosLocal/stash/File_Search_B/src/main/java/");
 
-        Files.list(path)
+        Files.walk(path)
                 .limit(50)
                 .forEach(pat -> {
                     System.out.println(pat.getName(pat.getNameCount() - 1));
