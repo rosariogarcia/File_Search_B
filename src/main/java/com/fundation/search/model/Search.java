@@ -36,34 +36,36 @@ public class Search {
                     .limit(limit)
                     .forEach(unit -> {
 
-                        Path unitPath = unit;
+                        if (unit.getFileName()
+                                .toString()
+                                .toLowerCase()
+                                .contains(searchText.toLowerCase())) {
 
-                        try {
-                            StorageUnit item = new StorageUnit();
+                            Path unitPath = unit;
 
-                            if (Files.isDirectory(unitPath)) {
-                                item = new Folder();
-                                item.setType("Folder");
-                            } else {
-                                item = new File();
-                                item.setType("File");
-                                item.setSize(Files.size(unitPath));
+                            try {
+                                StorageUnit item = new StorageUnit();
+
+                                if (Files.isDirectory(unitPath)) {
+                                    item = new Folder();
+                                    item.setType("Folder");
+                                } else {
+                                    item = new File();
+                                    item.setType("File");
+                                    item.setSize(Files.size(unitPath));
+                                }
+
+
+                                item.setName(unitPath.getFileName().toString());
+                                item.setOwner(Files.getOwner(unitPath).toString());
+                                item.setUpdatedAt(Files.getLastModifiedTime(unitPath).toString());
+                                item.setPath(unitPath.toString());
+
+                                itemsList.add(item);
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-
-
-                            item.setName(unitPath.getFileName().toString());
-                            item.setOwner(Files.getOwner(unitPath).toString());
-                            item.setUpdatedAt(Files.getLastModifiedTime(unitPath).toString());
-                            item.setPath(unitPath.toString());
-
-                            itemsList.add(item);
                         }
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        unit.getName(unit.getNameCount() - 1);
                     });
         }
         else {
@@ -76,6 +78,6 @@ public class Search {
     public static void main(String[] args) throws IOException {
         Search test = new Search();
 
-        test.searchItems("/TrabajosLocal/stash/File_Search_B/src/main/java/com/fundation/search", "folder", null);
+        test.searchItems("/TrabajosLocal/stash/File_Search_B/src/main/java/com/fundation/search", "stor", null);
     }
 }
