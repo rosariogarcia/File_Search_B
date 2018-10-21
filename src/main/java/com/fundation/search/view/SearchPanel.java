@@ -89,7 +89,6 @@ public class SearchPanel extends JPanel {
         DefaultTableModel modelset = (DefaultTableModel) tableResults.getModel();
         model.addRow(dataToShow[0]);
         tableResults.setPreferredSize(new Dimension(350, 25));
-//        tableResults.setBackground(Color.WHITE);
         JScrollPane scrollPane = new JScrollPane(tableResults);
         tableResults.setFillsViewportHeight(true);
         add(tableResults.getTableHeader(), BorderLayout.CENTER);
