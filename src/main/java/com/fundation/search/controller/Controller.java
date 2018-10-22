@@ -18,12 +18,11 @@ public class Controller implements ActionListener {
     public Controller() throws IOException {
         view = new View();
         search = new Search();
-
-        String path = view.getPanel().getTextFieldPath();
-        System.out.println("path" + path);
-        String filename = view.getPanel().getFilename();
-        System.out.println("filename:" + filename);
         view.getPanel().getButtonSearch().addActionListener(e1 -> {
+            String path = view.getPanel().getTextFieldPath();
+            System.out.println("path" + path);
+            String filename = view.getPanel().getFilename();
+            System.out.println("filename:" + filename);
             System.out.println("click!");
             List<StorageUnit> itemsList = new ArrayList<StorageUnit>();
             try {
