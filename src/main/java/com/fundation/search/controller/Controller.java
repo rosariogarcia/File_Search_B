@@ -4,6 +4,7 @@ import com.fundation.search.model.Search;
 import com.fundation.search.model.StorageUnit;
 import com.fundation.search.view.View;
 
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -17,39 +18,32 @@ public class Controller implements ActionListener {
     public Controller() throws IOException {
         view = new View();
         search = new Search();
-        List<StorageUnit> itemsList = new ArrayList<StorageUnit>();
-        itemsList = search.searchItems("D:/me/cursos/devfund/repository/File_Search_B/src", "F", null);
+
+        String path = view.getPanel().getTextFieldPath();
+        System.out.println("path" + path);
+        String filename = view.getPanel().getFilename();
+        System.out.println("filename:" + filename);
+        view.getPanel().getButtonSearch().addActionListener(e1 -> {
+            System.out.println("click!");
+            List<StorageUnit> itemsList = new ArrayList<StorageUnit>();
+            try {
+                itemsList = search.searchItems("D:/me/cursos/devfund/repository/File_Search_B/src", "F", null);
+//                itemsList = search.searchItems(path, filename, null);
+                System.out.println(itemsList);
+                showResults(itemsList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-    public void showResults() {
-//        String[][] data = {{"Hello", "World"}, {"Hello", "World"}};
-//        String[] columns = {"Name", "Type", "Owner", "Create Date", "Modified Date"};
-//
-//        DefaultTableModel model = new DefaultTableModel(data, columns);
-//
-//        JScrollPane scrollPane = new JScrollPane(tableResults);
-//        tableResults.setFillsViewportHeight(true);
-//
-//
-//        tableResults = new JTable(model);
-//        add(tableResults.getTableHeader(), BorderLayout.CENTER);
-//        add(tableResults, BorderLayout.CENTER);
-//
-//        String[][] dataToShow = {{"sdfs", "sda"}, {"asdfsd", "World"}};
-//
-//        searchButton = new JButton("Search");
-//        searchButton.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                setResults(dataToShow);
-//            }
-//        });
-//
-//        DefaultTableModel modelset = (DefaultTableModel) tableResults.getModel();
-//        model.addRow(data[0]);
+    public void showResults(List<StorageUnit> itemsList) {
+        DefaultTableModel modelset = (DefaultTableModel) view.getPanel().getTableResults().getModel();
+        modelset.addRow(itemsList.toArray());
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        view.getPanel().getButton().addActionListener(e1 -> System.out.println("click!"));
+
     }
 }
