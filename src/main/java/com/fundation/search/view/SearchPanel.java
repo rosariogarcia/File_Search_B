@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class SearchPanel extends JPanel {
 
-    private GridLayout experimentLayout = new GridLayout(0, 1);
+    private GridLayout experimentLayout = new GridLayout(2, 0);
 
     private JLabel labelPath;
     private JTextField textFieldPath;
@@ -26,14 +26,16 @@ public class SearchPanel extends JPanel {
     }
 
     private void setting() {
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
     }
 
     private void init() {
         JPanel pathControls = new JPanel();
-        pathControls.setLayout(new GridLayout(0, 3));
+        pathControls.setMaximumSize(new Dimension(350, 25));
 
-        setLayout(experimentLayout);
+        pathControls.setLayout(new BoxLayout(pathControls, BoxLayout.LINE_AXIS));
+
         labelPath = new JLabel();
         labelPath.setText("Path:");
 
@@ -43,7 +45,7 @@ public class SearchPanel extends JPanel {
         buttonBrowse.addActionListener(e -> {
             fileChooser = new JFileChooser();
             fileChooser.setCurrentDirectory(new java.io.File("."));
-            fileChooser.setDialogTitle("choosertitle");
+            fileChooser.setDialogTitle("Select Source");
             fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             fileChooser.setAcceptAllFileFilterUsed(false);
 
@@ -54,7 +56,6 @@ public class SearchPanel extends JPanel {
                 System.out.println("No Selection ");
             }
             textFieldPath.setText(fileChooser.getSelectedFile().getPath());
-
         });
 
         pathControls.add(labelPath);
@@ -63,29 +64,27 @@ public class SearchPanel extends JPanel {
         add(pathControls);
 
         JPanel filenameControls = new JPanel();
-        filenameControls.setLayout(new GridLayout(0, 2));
+        filenameControls.setMaximumSize(new Dimension(400, 25));
+        filenameControls.setLayout(new BoxLayout(filenameControls, BoxLayout.LINE_AXIS));
 
         labelFilename = new JLabel();
         labelFilename.setText("Filename:");
         filenameControls.add(labelFilename);
 
         filename = new JTextField();
-        filename.setPreferredSize(new Dimension(350, 25));
+        filename.setPreferredSize(new Dimension(400, 25));
         filenameControls.add(filename);
         add(filenameControls);
 
         buttonSearch = new JButton("Search");
         add(buttonSearch);
 
-        String[][] data = {{"Hello", "World"}, {"Hello", "World"}};
+        String[][] data = {{"", ""}, {"", ""}};
         String[] columns = {"Name", "Type", "Owner", "Create Date", "Modified Date"};
 
         DefaultTableModel model = new DefaultTableModel(data, columns);
 
-        String[][] dataToShow = {{"sdfs", "sda"}, {"asdfsd", "World"}};
-
         tableResults = new JTable(model);
-        model.addRow(dataToShow[0]);
 
         JScrollPane scrollPane = new JScrollPane(tableResults);
 
