@@ -3,12 +3,11 @@ package com.fundation.search.view;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SearchPanel extends JPanel {
 
     private GridLayout experimentLayout = new GridLayout(0, 1);
+
     private JLabel labelPath;
     private JTextField textFieldPath;
     private JButton buttonBrowse;
@@ -41,20 +40,20 @@ public class SearchPanel extends JPanel {
         textFieldPath = new JTextField();
         buttonBrowse = new JButton("...");
 
-        buttonBrowse.addActionListener(e ->  {
-                fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new java.io.File("."));
-                fileChooser.setDialogTitle("choosertitle");
-                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                fileChooser.setAcceptAllFileFilterUsed(false);
+        buttonBrowse.addActionListener(e -> {
+            fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new java.io.File("."));
+            fileChooser.setDialogTitle("choosertitle");
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            fileChooser.setAcceptAllFileFilterUsed(false);
 
-                if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    System.out.println("getCurrentDirectory(): " + fileChooser.getCurrentDirectory());
-                    System.out.println("getSelectedFile() : " + fileChooser.getSelectedFile());
-                } else {
-                    System.out.println("No Selection ");
-                }
-                textFieldPath.setText(fileChooser.getSelectedFile().getPath());
+            if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                System.out.println("getCurrentDirectory(): " + fileChooser.getCurrentDirectory());
+                System.out.println("getSelectedFile() : " + fileChooser.getSelectedFile());
+            } else {
+                System.out.println("No Selection ");
+            }
+            textFieldPath.setText(fileChooser.getSelectedFile().getPath());
 
         });
 
@@ -86,19 +85,26 @@ public class SearchPanel extends JPanel {
         String[][] dataToShow = {{"sdfs", "sda"}, {"asdfsd", "World"}};
 
         tableResults = new JTable(model);
-        DefaultTableModel modelset = (DefaultTableModel) tableResults.getModel();
         model.addRow(dataToShow[0]);
-        tableResults.setPreferredSize(new Dimension(350, 25));
+
         JScrollPane scrollPane = new JScrollPane(tableResults);
-        tableResults.setFillsViewportHeight(true);
-        add(tableResults.getTableHeader(), BorderLayout.CENTER);
-        add(tableResults, BorderLayout.CENTER);
 
-        add(tableResults);
-
+        add(scrollPane);
     }
 
     public String getFilename() {
         return filename.getText();
+    }
+
+    public String getTextFieldPath() {
+        return textFieldPath.getText();
+    }
+
+    public JButton getButtonSearch() {
+        return buttonSearch;
+    }
+
+    public JTable getTableResults() {
+        return tableResults;
     }
 }
