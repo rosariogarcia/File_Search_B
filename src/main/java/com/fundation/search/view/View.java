@@ -26,8 +26,4 @@ public class View extends JFrame{
     public JPanel getPanel(){
         return panel;
     }
-
-    public static void main(String[] args){
-        View view = new View();
-    }
 }

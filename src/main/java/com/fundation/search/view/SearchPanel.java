@@ -98,10 +98,6 @@ public class SearchPanel extends JPanel {
 
     }
 
-    private void setTable() {
-
-    }
-
     public String getFilename() {
         return filename.getText();
     }
