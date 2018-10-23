@@ -92,10 +92,6 @@ public class SearchPanel extends JPanel {
         add(scrollPane);
     }
 
-    private void setTable() {
-
-    }
-
     public String getFilename() {
         return filename.getText();
     }
