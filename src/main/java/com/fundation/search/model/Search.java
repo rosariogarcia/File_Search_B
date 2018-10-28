@@ -57,8 +57,10 @@ public class Search {
 
                                 item.setName(unitPath.getFileName().toString());
                                 item.setOwner(Files.getOwner(unitPath).toString());
+                                item.setCreatedAt(Files.getAttribute(unitPath, "creationTime").toString());
                                 item.setUpdatedAt(Files.getLastModifiedTime(unitPath).toString());
                                 item.setPath(unitPath.toString());
+                                item.setHidden(Files.isHidden(unitPath));
 
                                 itemsList.add(item);
                             } catch (IOException e) {
