@@ -23,10 +23,8 @@ public class SearchPanel extends JPanel {
     private JLabel labelExtension;
     private JTextField extension;
 
-    private JLabel labelReadOnly;
     private JCheckBox readOnly;
 
-    private JLabel labelHidden;
     private JCheckBox hidden;
 
     private JLabel labelOwner;
