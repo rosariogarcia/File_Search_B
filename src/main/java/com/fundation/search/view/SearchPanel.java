@@ -16,6 +16,28 @@ public class SearchPanel extends JPanel {
     private JLabel labelFilename;
     private JTextField filename;
 
+    private JLabel labelSize;
+    private JComboBox optionSize;
+    private JTextField size;
+
+    private JLabel labelExtension;
+    private JTextField extension;
+
+    private JLabel labelReadOnly;
+    private JCheckBox readOnly;
+
+    private JLabel labelHidden;
+    private JCheckBox hidden;
+
+    private JLabel labelOwner;
+    private JTextField owner;
+
+    private JLabel labelContent;
+    private JTextField content;
+
+    private JLabel labelType;
+    private JComboBox type;
+
     private JButton buttonSearch;
 
     private JTable tableResults;
@@ -75,6 +97,96 @@ public class SearchPanel extends JPanel {
         filename.setPreferredSize(new Dimension(400, 25));
         filenameControls.add(filename);
         add(filenameControls);
+
+        // size
+        JPanel sizeControls = new JPanel();
+        sizeControls.setLayout(new GridLayout(0, 3));
+
+        labelSize = new JLabel();
+        labelSize.setText("Size:");
+        sizeControls.add(labelSize);
+
+        optionSize = new JComboBox();
+        optionSize.addItem("<");
+        optionSize.addItem(">");
+        optionSize.addItem("==");
+        sizeControls.add(optionSize);
+
+
+        size = new JTextField();
+        size.setPreferredSize(new Dimension(350, 25));
+        sizeControls.add(size);
+
+        add(sizeControls);
+        // end size
+
+        // extension
+        JPanel extensionControls = new JPanel();
+        sizeControls.setLayout(new GridLayout(0, 2));
+        labelExtension = new JLabel("Extension");
+        extensionControls.add(labelExtension);
+
+        extension = new JTextField();
+        extensionControls.add(extension);
+
+        add(extensionControls);
+
+        // end extension
+
+        // checks
+        JPanel checkControls = new JPanel();
+        sizeControls.setLayout(new GridLayout(0, 2));
+
+        readOnly = new JCheckBox("Read Only", false);
+        checkControls.add(readOnly);
+
+        hidden = new JCheckBox("Hidden", false);
+        checkControls.add(hidden);
+
+        add(checkControls);
+
+        // end checks
+
+        // owner
+        JPanel ownerControls = new JPanel();
+        ownerControls.setLayout(new GridLayout(0, 2));
+        labelOwner = new JLabel("Owner");
+        ownerControls.add(labelOwner);
+
+        owner = new JTextField();
+        ownerControls.add(owner);
+
+        add(ownerControls);
+
+        // end owner
+
+
+        // content
+        JPanel contentControls = new JPanel();
+        contentControls.setLayout(new GridLayout(0, 2));
+        labelContent = new JLabel("Content");
+        ownerControls.add(labelContent);
+
+        content = new JTextField();
+        ownerControls.add(content);
+
+        add(contentControls);
+
+        // end content
+
+        //type
+        JPanel typeControls = new JPanel();
+        contentControls.setLayout(new GridLayout(0, 2));
+        labelContent = new JLabel("Content");
+        typeControls.add(labelContent);
+
+        type = new JComboBox();
+        type.addItem("all");
+        type.addItem("Folder");
+        type.addItem("File");
+        typeControls.add(type);
+        add(typeControls);
+        // end type
 
         buttonSearch = new JButton("Search");
         add(buttonSearch);
