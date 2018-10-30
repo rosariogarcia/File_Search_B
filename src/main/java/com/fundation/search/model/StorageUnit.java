@@ -28,6 +28,7 @@ public class StorageUnit {
     protected String owner;
     protected String createdAt;
     protected String updatedAt;
+    protected Boolean hidden;
 
     public StorageUnit () {
 
@@ -41,7 +42,7 @@ public class StorageUnit {
         this.size = Files.size(this.path);
     }
 
-    public void setSize (Long size){
+    public void setSize (Long size) throws IOException {
         this.size = size;
     }
 
@@ -63,6 +64,10 @@ public class StorageUnit {
 
     public void setUpdatedAt (String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public void setHidden (Boolean hidden) {
+        this.hidden = hidden;
     }
 
 
@@ -92,6 +97,10 @@ public class StorageUnit {
 
     public String getUpdatedAt () {
         return this.updatedAt;
+    }
+
+    public Boolean getHidden () {
+        return this.hidden;
     }
 
 }
