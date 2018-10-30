@@ -82,33 +82,28 @@ public class Search implements ISearch {
 
     public List<StorageUnit> filterByCriteria(SearchCriteria criteria, List<StorageUnit> itemsList) {
 
-        if (criteria.getExtension() != null) {
+        List<StorageUnit> filteredList = itemsList;
 
-            itemsList = (List<StorageUnit>) itemsList.stream()
+        if (criteria.getExtension() != null) {
+            filteredList = (List<StorageUnit>) filteredList.stream()
                     .filter(item -> "File".equals(item.getType()))
                     .filter(item -> criteria.getExtension().equals(((File) item).getExtension()))
                     .collect(Collectors.toList());
         }
 
         if (criteria.getHidden() != null) {
-            itemsList = (List<StorageUnit>) itemsList.stream()
+            filteredList = (List<StorageUnit>) filteredList.stream()
                     .filter(item -> item.getHidden() == criteria.getHidden())
                     .collect(Collectors.toList());
         }
 
         if (criteria.getOwner() != null) {
-            itemsList = (List<StorageUnit>) itemsList.stream()
+            filteredList = (List<StorageUnit>) filteredList.stream()
                     .filter(item -> criteria.getOwner().equals(item.getOwner()))
                     .collect(Collectors.toList());
         }
 
-        if (criteria.getSize() != null) {
-            itemsList = (List<StorageUnit>) itemsList.stream()
-                    .filter(item -> criteria.getOwner().equals(item.getOwner()))
-                    .collect(Collectors.toList());
-        }
-
-        return itemsList;
+        return filteredList;
     }
 
     public static void main(String[] args) throws IOException {
