@@ -42,7 +42,7 @@ public class StorageUnit {
         this.size = Files.size(this.path);
     }
 
-    public void setSize (Long size){
+    public void setSize (Long size) throws IOException {
         this.size = size;
     }
 

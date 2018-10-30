@@ -20,14 +20,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Search {
-    protected List<StorageUnit> itemsList = new ArrayList<StorageUnit>();
+public class Search implements ISearch {
+    protected List<StorageUnit> itemsList = new ArrayList<>();
     protected Path path;
-    protected String searchText;
 
-    public List<StorageUnit> searchItems(String path, String searchText, Integer limit) throws IOException {
+    public List<StorageUnit> searchItems(SearchCriteria criteria, Integer limit) throws IOException {
         this.itemsList.clear();
         limit = limit == null ? 100 : limit;
+        String searchText = criteria.getSearchText();
+        String path = criteria.getPath();
         String searchString = (searchText == null || searchText.equals("")) ? "*" : searchText;
 
         this.path = Paths.get(path);
@@ -52,8 +53,8 @@ public class Search {
                                     item = new File();
                                     item.setType("File");
                                     item.setSize(Files.size(unitPath));
+                                    ((File) item).setExtension(unitPath.getFileName().toString().split("[.]")[1]);
                                 }
-
 
                                 item.setName(unitPath.getFileName().toString());
                                 item.setOwner(Files.getOwner(unitPath).toString());
@@ -79,6 +80,9 @@ public class Search {
     public static void main(String[] args) throws IOException {
         Search test = new Search();
 
-        test.searchItems("/TrabajosLocal/stash/File_Search_B/src/main/java/com/fundation/search", "f", null);
+        SearchCriteria criteria = new SearchCriteria("/TrabajosLocal/stash/File_Search_B/src/main/java/com/fundation/search");
+        criteria.setSearchText("f");
+
+        test.searchItems(criteria, null);
     }
 }

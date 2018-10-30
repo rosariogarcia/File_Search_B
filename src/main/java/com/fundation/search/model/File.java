@@ -34,6 +34,11 @@ public class File extends StorageUnit {
         return this.keywords;
     }
 
+    public void setExtension () {
+        if (this.name != null) {
+            this.extension = this.name.split("[.]")[1];
+        }
+    }
 
     public void setExtension (String extension) {
         this.extension = extension;
