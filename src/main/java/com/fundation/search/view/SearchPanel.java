@@ -6,8 +6,6 @@ import java.awt.*;
 
 public class SearchPanel extends JPanel {
 
-    private GridLayout experimentLayout = new GridLayout(2, 0);
-
     private JLabel labelPath;
     private JTextField textFieldPath;
     private JButton buttonBrowse;
@@ -47,21 +45,17 @@ public class SearchPanel extends JPanel {
 
     private void setting() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
     }
 
     private void init() {
-        JPanel pathControls = new JPanel();
-        pathControls.setMaximumSize(new Dimension(350, 25));
+        JPanel searchControls = new JPanel(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
 
-        pathControls.setLayout(new BoxLayout(pathControls, BoxLayout.LINE_AXIS));
-
-        labelPath = new JLabel();
-        labelPath.setText("Path:");
-
+        labelPath = new JLabel("Path:");
+        searchControls.add(labelPath);
         textFieldPath = new JTextField();
+        searchControls.add(textFieldPath);
         buttonBrowse = new JButton("...");
-
         buttonBrowse.addActionListener(e -> {
             fileChooser = new JFileChooser();
             fileChooser.setCurrentDirectory(new java.io.File("."));
@@ -77,114 +71,71 @@ public class SearchPanel extends JPanel {
             }
             textFieldPath.setText(fileChooser.getSelectedFile().getPath());
         });
+        searchControls.add(buttonBrowse);
 
-        pathControls.add(labelPath);
-        pathControls.add(textFieldPath);
-        pathControls.add(buttonBrowse);
-        add(pathControls);
-
-        JPanel filenameControls = new JPanel();
-        filenameControls.setMaximumSize(new Dimension(400, 25));
-        filenameControls.setLayout(new BoxLayout(filenameControls, BoxLayout.LINE_AXIS));
-
-        labelFilename = new JLabel();
-        labelFilename.setText("Filename:");
-        filenameControls.add(labelFilename);
-
+        labelFilename = new JLabel("Filename:");
+        searchControls.add(labelFilename);
         filename = new JTextField();
-        filename.setPreferredSize(new Dimension(400, 25));
-        filenameControls.add(filename);
-        add(filenameControls);
+        searchControls.add(filename);
 
         // size
-        JPanel sizeControls = new JPanel();
-        sizeControls.setLayout(new GridLayout(0, 3));
-
-        labelSize = new JLabel();
-        labelSize.setText("Size:");
-        sizeControls.add(labelSize);
+        labelSize = new JLabel("Size:");
+        searchControls.add(labelSize);
 
         optionSize = new JComboBox();
         optionSize.addItem("<");
         optionSize.addItem(">");
         optionSize.addItem("==");
-        sizeControls.add(optionSize);
-
+        searchControls.add(optionSize);
 
         size = new JTextField();
-        size.setPreferredSize(new Dimension(350, 25));
-        sizeControls.add(size);
-
-        add(sizeControls);
+        searchControls.add(size);
         // end size
 
         // extension
-        JPanel extensionControls = new JPanel();
-        sizeControls.setLayout(new GridLayout(0, 2));
         labelExtension = new JLabel("Extension");
-        extensionControls.add(labelExtension);
+        searchControls.add(labelExtension);
 
         extension = new JTextField();
-        extensionControls.add(extension);
-
-        add(extensionControls);
-
+        searchControls.add(extension);
         // end extension
 
         // checks
-        JPanel checkControls = new JPanel();
-        sizeControls.setLayout(new GridLayout(0, 2));
-
         readOnly = new JCheckBox("Read Only", false);
-        checkControls.add(readOnly);
+        searchControls.add(readOnly);
 
         hidden = new JCheckBox("Hidden", false);
-        checkControls.add(hidden);
-
-        add(checkControls);
-
+        searchControls.add(hidden);
         // end checks
 
         // owner
-        JPanel ownerControls = new JPanel();
-        ownerControls.setLayout(new GridLayout(0, 2));
         labelOwner = new JLabel("Owner");
-        ownerControls.add(labelOwner);
+        searchControls.add(labelOwner);
 
         owner = new JTextField();
-        ownerControls.add(owner);
-
-        add(ownerControls);
-
+        searchControls.add(owner);
         // end owner
 
 
         // content
-        JPanel contentControls = new JPanel();
-        contentControls.setLayout(new GridLayout(0, 2));
         labelContent = new JLabel("Content");
-        ownerControls.add(labelContent);
+        searchControls.add(labelContent);
 
         content = new JTextField();
-        ownerControls.add(content);
-
-        add(contentControls);
-
+        searchControls.add(content);
         // end content
 
         //type
-        JPanel typeControls = new JPanel();
-        contentControls.setLayout(new GridLayout(0, 2));
-        labelContent = new JLabel("Content");
-        typeControls.add(labelContent);
+        labelContent = new JLabel("Type");
+        searchControls.add(labelContent);
 
         type = new JComboBox();
         type.addItem("all");
         type.addItem("Folder");
         type.addItem("File");
-        typeControls.add(type);
-        add(typeControls);
+        searchControls.add(type);
         // end type
+        add(searchControls);
 
         buttonSearch = new JButton("Search");
         add(buttonSearch);
