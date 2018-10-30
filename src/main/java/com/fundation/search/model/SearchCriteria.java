@@ -11,11 +11,12 @@ import java.util.Map;
 public class SearchCriteria {
     protected String path;
     protected String searchText;
+    protected String extension;
     protected Boolean hidden;
+    protected String owner;
     protected Map<Integer, Date> createdDate;
     protected Map<Integer, Date> modifiedDate;
     protected Map<Integer, Date> accessDate;
-    protected String owner;
     protected Map<Integer, Long> size;
 
     public SearchCriteria(String path) {
@@ -34,6 +35,10 @@ public class SearchCriteria {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 
     /**
@@ -162,12 +167,16 @@ public class SearchCriteria {
         return this.path;
     }
 
-    public boolean getHidden() {
+    public Boolean getHidden() {
         return this.hidden;
     }
 
     public String getOwner() {
         return this.owner;
+    }
+
+    public String getExtension() {
+        return this.extension;
     }
 
     public Map<Integer, Date> getCreatedDate() {

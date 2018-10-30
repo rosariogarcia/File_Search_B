@@ -19,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Search implements ISearch {
     protected List<StorageUnit> itemsList = new ArrayList<>();
@@ -74,14 +75,48 @@ public class Search implements ISearch {
             System.out.println("Not a valid path: " + this.path);
         }
 
+        filterByCriteria(criteria, this.itemsList);
+
         return this.itemsList;
+    }
+
+    public List<StorageUnit> filterByCriteria(SearchCriteria criteria, List<StorageUnit> itemsList) {
+
+        if (criteria.getExtension() != null) {
+
+            itemsList = (List<StorageUnit>) itemsList.stream()
+                    .filter(item -> "File".equals(item.getType()))
+                    .filter(item -> criteria.getExtension().equals(((File) item).getExtension()))
+                    .collect(Collectors.toList());
+        }
+
+        if (criteria.getHidden() != null) {
+            itemsList = (List<StorageUnit>) itemsList.stream()
+                    .filter(item -> item.getHidden() == criteria.getHidden())
+                    .collect(Collectors.toList());
+        }
+
+        if (criteria.getOwner() != null) {
+            itemsList = (List<StorageUnit>) itemsList.stream()
+                    .filter(item -> criteria.getOwner().equals(item.getOwner()))
+                    .collect(Collectors.toList());
+        }
+
+        if (criteria.getSize() != null) {
+            itemsList = (List<StorageUnit>) itemsList.stream()
+                    .filter(item -> criteria.getOwner().equals(item.getOwner()))
+                    .collect(Collectors.toList());
+        }
+
+        return itemsList;
     }
 
     public static void main(String[] args) throws IOException {
         Search test = new Search();
 
         SearchCriteria criteria = new SearchCriteria("/TrabajosLocal/stash/File_Search_B/src/main/java/com/fundation/search");
-        criteria.setSearchText("f");
+//        criteria.setSearchText("f");
+        criteria.setExtension("java");
 
         test.searchItems(criteria, null);
     }
