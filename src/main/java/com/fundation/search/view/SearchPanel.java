@@ -44,17 +44,25 @@ public class SearchPanel extends JPanel {
     }
 
     private void setting() {
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        setLayout(new BorderLayout());
     }
 
     private void init() {
+
         JPanel searchControls = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.HORIZONTAL;
 
         labelPath = new JLabel("Path:");
-        searchControls.add(labelPath);
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.insets = new Insets(0, 10, 0, 0);
+        searchControls.add(labelPath, constraints);
         textFieldPath = new JTextField();
-        searchControls.add(textFieldPath);
+        constraints.insets = new Insets(5, 0, 0, 10);
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        searchControls.add(textFieldPath, constraints);
         buttonBrowse = new JButton("...");
         buttonBrowse.addActionListener(e -> {
             fileChooser = new JFileChooser();
@@ -71,11 +79,18 @@ public class SearchPanel extends JPanel {
             }
             textFieldPath.setText(fileChooser.getSelectedFile().getPath());
         });
-        searchControls.add(buttonBrowse);
+        constraints.gridwidth = 1;
+        constraints.gridx = 2;
+        constraints.gridy = 0;
+        searchControls.add(buttonBrowse, constraints);
 
         labelFilename = new JLabel("Filename:");
+        constraints.gridx = 1;
+        constraints.gridy = 1;
         searchControls.add(labelFilename);
         filename = new JTextField();
+        constraints.gridx = 2;
+        constraints.gridy = 1;
         searchControls.add(filename);
 
         // size
@@ -135,10 +150,15 @@ public class SearchPanel extends JPanel {
         type.addItem("File");
         searchControls.add(type);
         // end type
-        add(searchControls);
 
         buttonSearch = new JButton("Search");
-        add(buttonSearch);
+        searchControls.add(buttonSearch);
+
+
+        JPanel north = new JPanel(new FlowLayout());
+        north.add(searchControls);
+        north.setPreferredSize(new Dimension(500, 500));
+        add(north, BorderLayout.NORTH);
 
         String[][] data = {{"", ""}, {"", ""}};
         String[] columns = {"Name", "Type", "Owner", "Create Date", "Modified Date"};
@@ -149,7 +169,7 @@ public class SearchPanel extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(tableResults);
 
-        add(scrollPane);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     public String getFilename() {
@@ -166,5 +186,37 @@ public class SearchPanel extends JPanel {
 
     public JTable getTableResults() {
         return tableResults;
+    }
+
+    public String getOptionSize() {
+        return optionSize.getSelectedItem().toString();
+    }
+
+    public String getSizeTextField() {
+        return size.getText();
+    }
+
+    public String getExtension() {
+        return extension.getText();
+    }
+
+    public boolean getReadOnly() {
+        return readOnly.isSelected();
+    }
+
+    public boolean getHidden() {
+        return hidden.isSelected();
+    }
+
+    public String getOwner() {
+        return owner.getText();
+    }
+
+    public String getContent() {
+        return content.getText();
+    }
+
+    public String getType() {
+        return type.getSelectedItem().toString();
     }
 }
