@@ -1,8 +1,12 @@
 package com.fundation.search.view;
 
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
 
 public class SearchPanel extends JPanel {
 
@@ -35,6 +39,7 @@ public class SearchPanel extends JPanel {
     private JComboBox type;
 
     private JButton buttonSearch;
+    private JButton buttonClose;
 
     private JTable tableResults;
 
@@ -56,13 +61,17 @@ public class SearchPanel extends JPanel {
         labelPath = new JLabel("Path:");
         constraints.gridx = 0;
         constraints.gridy = 0;
-        constraints.insets = new Insets(0, 10, 0, 0);
+        constraints.insets = new Insets(10, 10, 0, 10);
         searchControls.add(labelPath, constraints);
         textFieldPath = new JTextField();
+        textFieldPath.setSize(150,25);
         constraints.insets = new Insets(5, 0, 0, 10);
         constraints.gridx = 1;
         constraints.gridy = 0;
+        constraints.gridwidth=1;
+        constraints.gridheight = 1;
         searchControls.add(textFieldPath, constraints);
+
         buttonBrowse = new JButton("...");
         buttonBrowse.addActionListener(e -> {
             fileChooser = new JFileChooser();
@@ -85,79 +94,170 @@ public class SearchPanel extends JPanel {
         searchControls.add(buttonBrowse, constraints);
 
         labelFilename = new JLabel("Filename:");
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        searchControls.add(labelFilename, constraints);
+        filename = new JTextField();
+        filename.setPreferredSize(new Dimension(150,25));
         constraints.gridx = 1;
         constraints.gridy = 1;
-        searchControls.add(labelFilename);
-        filename = new JTextField();
-        constraints.gridx = 2;
-        constraints.gridy = 1;
-        searchControls.add(filename);
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(filename, constraints);
 
         // size
         labelSize = new JLabel("Size:");
-        searchControls.add(labelSize);
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        searchControls.add(labelSize,constraints);
 
         optionSize = new JComboBox();
         optionSize.addItem("<");
         optionSize.addItem(">");
         optionSize.addItem("==");
-        searchControls.add(optionSize);
+        optionSize.setPreferredSize(new Dimension(70,25));
+        constraints.gridx = 1;
+        constraints.gridy = 2;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(optionSize, constraints);
+
 
         size = new JTextField();
-        searchControls.add(size);
+        size.setPreferredSize(new Dimension(70,25));
+        constraints.gridx = 2;
+        constraints.gridy = 2;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(size, constraints);
+
         // end size
 
         // extension
         labelExtension = new JLabel("Extension");
-        searchControls.add(labelExtension);
+        labelExtension.setPreferredSize(new Dimension(70,25));
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(labelExtension, constraints);
 
         extension = new JTextField();
-        searchControls.add(extension);
-        // end extension
+        extension.setPreferredSize(new Dimension(70,25));
+        constraints.gridx = 1;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(extension, constraints);        // end extension
 
         // checks
         readOnly = new JCheckBox("Read Only", false);
-        searchControls.add(readOnly);
+        /*readOnly.setPreferredSize(new Dimension(70,25));*/
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(readOnly, constraints);
 
         hidden = new JCheckBox("Hidden", false);
-        searchControls.add(hidden);
+        /*hidden.setPreferredSize(new Dimension(70,25));*/
+        constraints.gridx = 1;
+        constraints.gridy = 4;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(hidden, constraints);
         // end checks
 
         // owner
         labelOwner = new JLabel("Owner");
-        searchControls.add(labelOwner);
+        labelOwner.setPreferredSize(new Dimension(70,25));
+        constraints.gridx = 0;
+        constraints.gridy = 5;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(labelOwner, constraints);
+
 
         owner = new JTextField();
-        searchControls.add(owner);
+        owner.setPreferredSize(new Dimension(70,25));
+        constraints.gridx = 1;
+        constraints.gridy = 5;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(owner, constraints);
         // end owner
 
 
         // content
         labelContent = new JLabel("Content");
-        searchControls.add(labelContent);
+        labelContent.setPreferredSize(new Dimension(70,25));
+        constraints.gridx = 0;
+        constraints.gridy = 6;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(labelContent, constraints);
 
         content = new JTextField();
-        searchControls.add(content);
+        content.setPreferredSize(new Dimension(70,25));
+        constraints.gridx = 1;
+        constraints.gridy = 6;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(content, constraints);
         // end content
 
         //type
         labelContent = new JLabel("Type");
-        searchControls.add(labelContent);
+        labelContent.setPreferredSize(new Dimension(70,25));
+        constraints.gridx = 0;
+        constraints.gridy = 7;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(labelContent, constraints);
 
         type = new JComboBox();
         type.addItem("all");
         type.addItem("Folder");
         type.addItem("File");
-        searchControls.add(type);
+        type.setPreferredSize(new Dimension(70,25));
+        constraints.gridx = 1;
+        constraints.gridy = 7;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(type, constraints);
+
+
         // end type
 
         buttonSearch = new JButton("Search");
-        searchControls.add(buttonSearch);
+        buttonSearch.setPreferredSize(new Dimension(70,25));
+        constraints.gridx = 1;
+        constraints.gridy = 8;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(buttonSearch, constraints);
+
+        //Close button
+        buttonClose = new JButton("Close");
+        buttonClose.setPreferredSize(new Dimension(70,25));
+        buttonClose.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.exit(0);
+                    }
+                }
+        );
+        constraints.gridx = 2;
+        constraints.gridy = 8;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(buttonClose, constraints);
 
 
         JPanel north = new JPanel(new FlowLayout());
         north.add(searchControls);
-        north.setPreferredSize(new Dimension(500, 500));
+        north.setPreferredSize(new Dimension(300, 300));
         add(north, BorderLayout.NORTH);
 
         String[][] data = {{"", ""}, {"", ""}};
@@ -219,4 +319,5 @@ public class SearchPanel extends JPanel {
     public String getType() {
         return type.getSelectedItem().toString();
     }
+
 }

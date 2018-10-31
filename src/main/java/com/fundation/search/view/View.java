@@ -24,6 +24,10 @@ public class View extends JFrame {
     }
 
     public SearchPanel getPanel() {
+
         return panel;
+    }
+    public static void main (String[] Args){
+        View view = new View();
     }
 }
