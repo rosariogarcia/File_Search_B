@@ -57,7 +57,7 @@ public class Search implements ISearch {
                                     ((File) item).setExtension(unitPath.getFileName().toString().split("[.]")[1]);
                                 }
 
-                                item.setName(unitPath.getFileName().toString());
+                                item.setName(unitPath.getFileName().toString().split("[.]")[0]);
                                 item.setOwner(Files.getOwner(unitPath).toString());
                                 item.setCreatedAt(Files.getAttribute(unitPath, "creationTime").toString());
                                 item.setUpdatedAt(Files.getLastModifiedTime(unitPath).toString());
@@ -75,7 +75,7 @@ public class Search implements ISearch {
             System.out.println("Not a valid path: " + this.path);
         }
 
-        filterByCriteria(criteria, this.itemsList);
+        this.itemsList = filterByCriteria(criteria, this.itemsList);
 
         return this.itemsList;
     }
@@ -107,12 +107,15 @@ public class Search implements ISearch {
     }
 
     public static void main(String[] args) throws IOException {
+        List<StorageUnit> response;
         Search test = new Search();
 
-        SearchCriteria criteria = new SearchCriteria("/TrabajosLocal/stash/File_Search_B/src/main/java/com/fundation/search");
+        SearchCriteria criteria = new SearchCriteria("/TrabajosLocal/stash/File_Search_B/src/test/java/com/fundation/search");
 //        criteria.setSearchText("f");
-        criteria.setExtension("java");
+        criteria.setExtension("txt");
 
-        test.searchItems(criteria, null);
+        response = test.searchItems(criteria, null);
+
+        System.out.println(response.size());
     }
 }
