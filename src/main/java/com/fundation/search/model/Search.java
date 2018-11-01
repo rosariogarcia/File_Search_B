@@ -84,7 +84,7 @@ public class Search implements ISearch {
 
         List<StorageUnit> filteredList = itemsList;
 
-        if (criteria.getExtension() != null) {
+        if (criteria.getExtension() != null && !criteria.getExtension().equals("")) {
             filteredList = (List<StorageUnit>) filteredList.stream()
                     .filter(item -> "File".equals(item.getType()))
                     .filter(item -> criteria.getExtension().equals(((File) item).getExtension()))
@@ -97,7 +97,7 @@ public class Search implements ISearch {
                     .collect(Collectors.toList());
         }
 
-        if (criteria.getOwner() != null) {
+        if (criteria.getOwner() != null && !criteria.getOwner().equals("")) {
             filteredList = (List<StorageUnit>) filteredList.stream()
                     .filter(item -> criteria.getOwner().equals(item.getOwner()))
                     .collect(Collectors.toList());
