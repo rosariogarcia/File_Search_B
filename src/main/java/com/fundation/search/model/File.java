@@ -35,7 +35,12 @@ public class File extends StorageUnit {
     }
 
     public String getName() {
-        return this.name + '.' + this.extension;
+
+        if (this.extension != null) {
+            return this.name + '.' + this.extension;
+        }
+
+        return this.name;
     }
 
     public void setExtension () {

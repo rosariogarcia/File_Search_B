@@ -13,6 +13,8 @@ package com.fundation.search.model;/*
  * Version: 1.0
  */
 
+import com.sun.xml.internal.ws.api.ha.StickyFeature;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -47,17 +49,35 @@ public class Search implements ISearch {
                             try {
                                 StorageUnit item;
 
+                                String itemName = unitPath.getFileName().toString();
+
                                 if (Files.isDirectory(unitPath)) {
                                     item = new Folder();
                                     item.setType("Folder");
-                                } else {
+                                    item.setName(itemName);
+                                }
+                                else {
                                     item = new File();
                                     item.setType("File");
                                     item.setSize(Files.size(unitPath));
-                                    ((File) item).setExtension(unitPath.getFileName().toString().split("[.]")[1]);
+                                    String[] splitName = itemName.split("[.]");
+
+                                    if (itemName.charAt(0) == '.') {
+                                        item.setName("." + itemName.split("[.]")[1]);
+
+                                        if (splitName.length >= 3) {
+                                            ((File) item).setExtension(unitPath.getFileName().toString().split("[.]")[2]);
+                                        }
+                                    }
+                                    else {
+                                        item.setName(itemName.split("[.]")[0]);
+
+                                        if (splitName.length >= 2) {
+                                            ((File) item).setExtension(unitPath.getFileName().toString().split("[.]")[1]);
+                                        }
+                                    }
                                 }
 
-                                item.setName(unitPath.getFileName().toString().split("[.]")[0]);
                                 item.setOwner(Files.getOwner(unitPath).toString());
                                 item.setCreatedAt(Files.getAttribute(unitPath, "creationTime").toString());
                                 item.setUpdatedAt(Files.getLastModifiedTime(unitPath).toString());
