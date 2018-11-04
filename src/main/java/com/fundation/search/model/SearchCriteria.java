@@ -6,6 +6,7 @@ package com.fundation.search.model;/*
  */
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class SearchCriteria {
@@ -47,6 +48,7 @@ public class SearchCriteria {
      * @param createdDate
      */
     public void setCreatedDate(String operator, Date createdDate) {
+        this.createdDate = new HashMap<Integer, Date>();
 
         switch (operator){
             case "==":
@@ -75,6 +77,7 @@ public class SearchCriteria {
     }
 
     public void setModifiedDate(String operator, Date modifiedDate) {
+        this.modifiedDate = new HashMap<Integer, Date>();
 
         switch (operator){
             case "==":
@@ -103,6 +106,7 @@ public class SearchCriteria {
     }
 
     public void setAccessDate(String operator, Date accessDate) {
+        this.accessDate = new HashMap<Integer, Date>();
 
         switch (operator){
             case "==":
@@ -131,6 +135,7 @@ public class SearchCriteria {
     }
 
     public void setSize(String operator, Long size) {
+        this.size = new HashMap<Integer, Long>();
 
         switch (operator){
             case "==":

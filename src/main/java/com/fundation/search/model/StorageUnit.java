@@ -29,6 +29,7 @@ public class StorageUnit {
     protected String owner;
     protected Date createdAt;
     protected Date updatedAt;
+    protected Date accessedAt;
     protected Boolean hidden;
 
     public StorageUnit () {
@@ -67,6 +68,10 @@ public class StorageUnit {
         this.updatedAt = updatedAt;
     }
 
+    public void setAccessedAt(Date accessedAt) {
+        this.accessedAt = accessedAt;
+    }
+
     public void setHidden (Boolean hidden) {
         this.hidden = hidden;
     }
@@ -98,6 +103,10 @@ public class StorageUnit {
 
     public Date getUpdatedAt () {
         return this.updatedAt;
+    }
+
+    public Date getAccessedAt() {
+        return this.accessedAt;
     }
 
     public Boolean getHidden () {

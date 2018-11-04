@@ -16,6 +16,7 @@ package com.fundation.search.model;/*
 import com.sun.xml.internal.ws.api.ha.StickyFeature;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -86,8 +87,10 @@ public class Search implements ISearch {
 
                                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
                                 FileTime createdAt = (FileTime) Files.getAttribute(unitPath, "creationTime");
+                                FileTime accessedAt = (FileTime) Files.getAttribute(unitPath, "lastAccessTime");
 
                                 item.setCreatedAt(formatter.parse(formatter.format(createdAt.toMillis())));
+                                item.setAccessedAt(formatter.parse(formatter.format(accessedAt.toMillis())));
                                 item.setUpdatedAt(formatter.parse(formatter.format(Files.getLastModifiedTime(unitPath).toMillis())));
                                 item.setOwner(Files.getOwner(unitPath).toString());
                                 item.setPath(unitPath.toString());
@@ -136,21 +139,141 @@ public class Search implements ISearch {
                     .collect(Collectors.toList());
         }
 
-        if (criteria.getCreatedDate() != null) {
+        if (criteria.getCreatedDate() != null && criteria.getCreatedDate().size() > 0) {
             filteredList = (List<StorageUnit>) filteredList.stream()
-                    .filter(item -> this.compareItems(criteria.getCreatedDate(), item))
+                    .filter(item -> this.compareDates(criteria.getCreatedDate(), item, "getCreatedAt"))
+                    .collect(Collectors.toList());
+        }
+
+        if (criteria.getModifiedDate() != null && criteria.getModifiedDate().size() > 0) {
+            filteredList = (List<StorageUnit>) filteredList.stream()
+                    .filter(item -> this.compareDates(criteria.getModifiedDate(), item, "getUpdatedAt"))
+                    .collect(Collectors.toList());
+        }
+
+        if (criteria.getAccessDate() != null && criteria.getAccessDate().size() > 0) {
+            filteredList = (List<StorageUnit>) filteredList.stream()
+                    .filter(item -> this.compareDates(criteria.getAccessDate(), item, "getAccessedAt"))
+                    .collect(Collectors.toList());
+        }
+
+        if (criteria.getSize() != null && criteria.getSize().size() > 0) {
+            filteredList = (List<StorageUnit>) filteredList.stream()
+                    .filter(item -> this.compareLongs(criteria.getSize(), item, "getSize"))
                     .collect(Collectors.toList());
         }
 
         return filteredList;
     }
 
-    public Boolean compareItems(Map<Integer, ?> criteria, StorageUnit item) {
-        Boolean output = false;
+    public Boolean compareDates(Map<Integer, Date> criteria, StorageUnit item, String method) {
 
-        System.out.println(criteria);
+        Integer index = (int) criteria.keySet().toArray()[0];
+        Object compareValue = new Object();
 
-        return output;
+        try {
+            compareValue = StorageUnit.class.getMethod(method).invoke(item);
+        }
+        catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        switch (index) {
+            case 0:
+                if (((Date) compareValue).compareTo(criteria.get(index)) == 0) {
+                    return true;
+                }
+                break;
+
+            case 1:
+                if (((Date) compareValue).compareTo(criteria.get(index)) < 0) {
+                    return true;
+                }
+                break;
+
+            case 2:
+                if (((Date) compareValue).compareTo(criteria.get(index)) > 0) {
+                    return true;
+                }
+                break;
+
+            case 3:
+                if (((Date) compareValue).compareTo(criteria.get(index)) <= 0) {
+                    return true;
+                }
+                break;
+
+            case 4:
+                if (((Date) compareValue).compareTo(criteria.get(index)) >= 0) {
+                    return true;
+                }
+                break;
+        }
+
+        return false;
+    }
+
+    public Boolean compareLongs(Map<Integer, Long> criteria, StorageUnit item, String method) {
+
+        Integer index = (int) criteria.keySet().toArray()[0];
+        Object compareValue = new Object();
+
+        try {
+            compareValue = StorageUnit.class.getMethod(method).invoke(item);
+        }
+        catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        if (compareValue == null) {
+            compareValue = new Long(0);
+        }
+
+        switch (index) {
+            case 0:
+                if ((long) compareValue == criteria.get(index)) {
+                    return true;
+                }
+                break;
+
+            case 1:
+                if ((long) compareValue < criteria.get(index)) {
+                    return true;
+                }
+                break;
+
+            case 2:
+                if ((long) compareValue > criteria.get(index)) {
+                    return true;
+                }
+                break;
+
+            case 3:
+                if ((long) compareValue <= criteria.get(index)) {
+                    return true;
+                }
+                break;
+
+            case 4:
+                if ((long) compareValue >= criteria.get(index)) {
+                    return true;
+                }
+                break;
+        }
+
+        return false;
     }
 
 
@@ -161,10 +284,18 @@ public class Search implements ISearch {
         SearchCriteria criteria = new SearchCriteria("/TrabajosLocal/stash/File_Search_B/src/test/java/com/fundation/search");
 //        criteria.setSearchText("f");
 //        criteria.setExtension("txt");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
 
-        criteria.setCreatedDate("<", date);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = formatter.parse("2018-11-03");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        criteria.setAccessDate(">=", date);
+
+//        criteria.setSize(">", new Long(1000));
         response = test.searchItems(criteria, null);
 
         System.out.println(response.size());
