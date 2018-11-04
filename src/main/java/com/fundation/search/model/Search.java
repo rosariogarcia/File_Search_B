@@ -282,8 +282,8 @@ public class Search implements ISearch {
         Search test = new Search();
 
         SearchCriteria criteria = new SearchCriteria("/TrabajosLocal/stash/File_Search_B/src/test/java/com/fundation/search");
-//        criteria.setSearchText("f");
-//        criteria.setExtension("txt");
+        criteria.setSearchText("f");
+        criteria.setExtension("txt");
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
@@ -295,7 +295,7 @@ public class Search implements ISearch {
 
         criteria.setAccessDate(">=", date);
 
-//        criteria.setSize(">", new Long(1000));
+        criteria.setSize(">", new Long(1000));
         response = test.searchItems(criteria, null);
 
         System.out.println(response.size());

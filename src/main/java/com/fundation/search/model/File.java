@@ -56,36 +56,4 @@ public class File extends StorageUnit {
     public void setKeywords (List<String> keywords) {
         this.keywords = keywords;
     }
-
-
-    public static void main(String[] args) throws IOException {
-
-        Path path = Paths.get("/TrabajosLocal/stash/File_Search_B/src/main/java/");
-
-        Files.walk(path)
-                .limit(50)
-                .forEach(pat -> {
-                    System.out.println(pat.getName(pat.getNameCount() - 1));
-                    try {
-                        System.out.println(Files.size(pat));
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-
-//        try {
-//            List<Path> test = Files.walk(path)
-//                    .map(Path::getFileName)
-//                    .sorted()
-//                    .collect(Collectors.toList());
-//
-//            for(Path item: test) {
-//                System.out.println(item);
-//            }
-//        }
-//        catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }
 }
