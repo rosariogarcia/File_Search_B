@@ -19,8 +19,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.FileTime;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Search implements ISearch {
@@ -78,14 +84,21 @@ public class Search implements ISearch {
                                     }
                                 }
 
+                                DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+                                FileTime createdAt = (FileTime) Files.getAttribute(unitPath, "creationTime");
+
+                                item.setCreatedAt(formatter.parse(formatter.format(createdAt.toMillis())));
+                                item.setUpdatedAt(formatter.parse(formatter.format(Files.getLastModifiedTime(unitPath).toMillis())));
                                 item.setOwner(Files.getOwner(unitPath).toString());
-                                item.setCreatedAt(Files.getAttribute(unitPath, "creationTime").toString());
-                                item.setUpdatedAt(Files.getLastModifiedTime(unitPath).toString());
                                 item.setPath(unitPath.toString());
                                 item.setHidden(Files.isHidden(unitPath));
 
                                 itemsList.add(item);
-                            } catch (IOException e) {
+                            }
+                            catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            catch (ParseException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -123,8 +136,23 @@ public class Search implements ISearch {
                     .collect(Collectors.toList());
         }
 
+        if (criteria.getCreatedDate() != null) {
+            filteredList = (List<StorageUnit>) filteredList.stream()
+                    .filter(item -> this.compareItems(criteria.getCreatedDate(), item))
+                    .collect(Collectors.toList());
+        }
+
         return filteredList;
     }
+
+    public Boolean compareItems(Map<Integer, ?> criteria, StorageUnit item) {
+        Boolean output = false;
+
+        System.out.println(criteria);
+
+        return output;
+    }
+
 
     public static void main(String[] args) throws IOException {
         List<StorageUnit> response;
@@ -132,8 +160,11 @@ public class Search implements ISearch {
 
         SearchCriteria criteria = new SearchCriteria("/TrabajosLocal/stash/File_Search_B/src/test/java/com/fundation/search");
 //        criteria.setSearchText("f");
-        criteria.setExtension("txt");
+//        criteria.setExtension("txt");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
 
+        criteria.setCreatedDate("<", date);
         response = test.searchItems(criteria, null);
 
         System.out.println(response.size());

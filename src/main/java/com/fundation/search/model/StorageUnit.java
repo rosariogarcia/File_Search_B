@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.util.Date;
 
 /**
  * @autor: maramirez
@@ -26,8 +27,8 @@ public class StorageUnit {
     protected Path path;
     protected String type;
     protected String owner;
-    protected String createdAt;
-    protected String updatedAt;
+    protected Date createdAt;
+    protected Date updatedAt;
     protected Boolean hidden;
 
     public StorageUnit () {
@@ -58,11 +59,11 @@ public class StorageUnit {
         this.owner = owner;
     }
 
-    public void setCreatedAt (String createdAt) {
+    public void setCreatedAt (Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public void setUpdatedAt (String updatedAt) {
+    public void setUpdatedAt (Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -91,11 +92,11 @@ public class StorageUnit {
         return this.owner;
     }
 
-    public String getCreatedAt () {
+    public Date getCreatedAt () {
         return this.createdAt;
     }
 
-    public String getUpdatedAt () {
+    public Date getUpdatedAt () {
         return this.updatedAt;
     }
 
