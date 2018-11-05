@@ -66,10 +66,10 @@ public class Controller {
                 criteria.setExtension(view.getPanel().getExtension());
                 criteria.setHidden(view.getPanel().getHidden());
                 criteria.setOwner(view.getPanel().getOwner());
-                criteria.setCreatedDate(view.getPanel().getCreateDate());
-                criteria.setModifiedDate(view.getPanel().getModifiedDate());
-                criteria.setAccessDate(view.getPanel().getAccessedDate());
-                criteria.setSize(view.getPanel().getOptionSize(), view.getPanel().getSizeTextField());
+                criteria.setCreatedDate(view.getPanel().getOptionSize(), view.getPanel().getCreateDate());
+                criteria.setModifiedDate(view.getPanel().getOptionSize(), view.getPanel().getModifiedDate());
+                criteria.setAccessDate(view.getPanel().getOptionSize(), view.getPanel().getAccessedDate());
+                criteria.setSize(view.getPanel().getOptionSize(), Validator.getAppropiateSize(view.getPanel().getSizeTextField(), view.getPanel().getSizeTextField()));
 
                 List<StorageUnit> itemsList = search.searchItems(criteria, null);
                 showResults(itemsList);
@@ -78,6 +78,7 @@ public class Controller {
             }
         });
     }
+
 
     /**
      * Sets table from View module to show results
