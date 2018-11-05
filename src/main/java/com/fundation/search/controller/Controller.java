@@ -85,7 +85,7 @@ public class Controller {
         model.setRowCount(0);
 
         for (StorageUnit item : itemsList) {
-            String[] data = {item.getName(), item.getType(), item.getOwner(), item.getCreatedAt(), item.getUpdatedAt()};
+            String[] data = {item.getName(), item.getType(), item.getOwner(), item.getCreatedAt().toString(), item.getUpdatedAt().toString()};
             model.addRow(data);
         }
     }

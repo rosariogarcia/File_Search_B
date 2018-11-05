@@ -6,16 +6,18 @@ package com.fundation.search.model;/*
  */
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class SearchCriteria {
     protected String path;
     protected String searchText;
+    protected String extension;
     protected Boolean hidden;
+    protected String owner;
     protected Map<Integer, Date> createdDate;
     protected Map<Integer, Date> modifiedDate;
     protected Map<Integer, Date> accessDate;
-    protected String owner;
     protected Map<Integer, Long> size;
 
     public SearchCriteria(String path) {
@@ -36,12 +38,17 @@ public class SearchCriteria {
         this.owner = owner;
     }
 
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
     /**
      *
      * @param operator
      * @param createdDate
      */
     public void setCreatedDate(String operator, Date createdDate) {
+        this.createdDate = new HashMap<Integer, Date>();
 
         switch (operator){
             case "==":
@@ -70,6 +77,7 @@ public class SearchCriteria {
     }
 
     public void setModifiedDate(String operator, Date modifiedDate) {
+        this.modifiedDate = new HashMap<Integer, Date>();
 
         switch (operator){
             case "==":
@@ -98,6 +106,7 @@ public class SearchCriteria {
     }
 
     public void setAccessDate(String operator, Date accessDate) {
+        this.accessDate = new HashMap<Integer, Date>();
 
         switch (operator){
             case "==":
@@ -126,6 +135,7 @@ public class SearchCriteria {
     }
 
     public void setSize(String operator, Long size) {
+        this.size = new HashMap<Integer, Long>();
 
         switch (operator){
             case "==":
@@ -162,12 +172,16 @@ public class SearchCriteria {
         return this.path;
     }
 
-    public boolean getHidden() {
+    public Boolean getHidden() {
         return this.hidden;
     }
 
     public String getOwner() {
         return this.owner;
+    }
+
+    public String getExtension() {
+        return this.extension;
     }
 
     public Map<Integer, Date> getCreatedDate() {
