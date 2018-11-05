@@ -1,8 +1,6 @@
 package com.fundation.search.view;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import com.toedter.calendar.JCalendar;
 import javafx.application.Application;
 import javafx.scene.control.DatePicker;
@@ -12,9 +10,8 @@ import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import sun.util.calendar.JulianCalendar;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
@@ -74,6 +71,10 @@ public class SearchPanel extends JPanel {
         setLayout(new BorderLayout());
     }
 
+    /**
+     * Initialize components
+     * @return
+     */
     private void init() {
 
         JPanel searchControls = new JPanel(new GridBagLayout());
@@ -338,10 +339,10 @@ public class SearchPanel extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    public String getFilename() {
-        return filename.getText();
-    }
-
+    /**
+     * return files by different options
+     * @return
+     */
     public String getTextFieldPath() {
         return textFieldPath.getText();
     }
@@ -349,7 +350,9 @@ public class SearchPanel extends JPanel {
     public JButton getButtonSearch() {
         return buttonSearch;
     }
-
+    public String getFilename() {
+        return filename.getText();
+    }
     public JTable getTableResults() {
         return tableResults;
     }
@@ -391,11 +394,11 @@ public class SearchPanel extends JPanel {
     }
 
     public Date getModifiedDate() {
-        return modifiedDate.getCalendar();
+        return modifiedDate.getDate();
     }
 
     public Date getAccessedDate() {
-        return accessDate.getCalendar();
+        return accessDate.getDate();
     }
 
     public String getOptionExtension() {
