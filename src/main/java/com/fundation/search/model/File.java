@@ -25,6 +25,7 @@ public class File extends StorageUnit {
 
 
     protected String extension;
+    protected Boolean readOnly = false;
     protected List<String> keywords = new ArrayList<String>();
 
     /**
@@ -79,5 +80,13 @@ public class File extends StorageUnit {
      */
     public void setKeywords (List<String> keywords) {
         this.keywords = keywords;
+    }
+
+    public Boolean getReadOnly() {
+        return this.readOnly;
+    }
+
+    public void setReadOnly(Boolean readOnly) {
+        this.readOnly = readOnly;
     }
 }

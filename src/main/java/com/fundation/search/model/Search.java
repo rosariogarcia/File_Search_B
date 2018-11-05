@@ -22,10 +22,7 @@ import java.nio.file.attribute.FileTime;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Search implements ISearch {
@@ -36,8 +33,10 @@ public class Search implements ISearch {
      * Search all items from within a valid path of a folder, uses a criteria object to filter the resulting list of
      * AssetUnit(StorageUnit), the criteria filter is an AND filter that can filter items by:
      *  - Partial string of a name
+     *  - Type (null/File/Folder) this will filter all types, files only, folders only
      *  - File extension
      *  - Hidden attribute
+     *  - Read only attribute
      *  - Owner attribute
      *  - Creation/Modified/Last Accessed date, this is a before/after/same date filter
      *  - Size, this is a mayor/minor/equal size filter
@@ -96,6 +95,13 @@ public class Search implements ISearch {
                                             ((File) item).setExtension(unitPath.getFileName().toString().split("[.]")[1]);
                                         }
                                     }
+
+                                    if (Files.isReadable(unitPath) && !Files.isWritable(unitPath)) {
+                                        ((File) item).setReadOnly(true);
+                                    }
+                                    else if (Files.isReadable(unitPath) && Files.isWritable(unitPath)) {
+                                        ((File) item).setReadOnly(false);
+                                    }
                                 }
 
                                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
@@ -131,12 +137,14 @@ public class Search implements ISearch {
 
     /**
      * Filters a list of Assets from a CriteriaSearch object, the criteria filter is an AND filter that can filter items by:
-     *      *  - Partial string of a name
-     *      *  - File extension
-     *      *  - Hidden attribute
-     *      *  - Owner attribute
-     *      *  - Creation/Modified/Last Accessed date, this is a before/after/same date filter
-     *      *  - Size, this is a mayor/minor/equal size filter
+     *  - Partial string of a name
+     *  - Type (null/File/Folder) this will filter all types, files only, folders only
+     *  - File extension
+     *  - Hidden attribute
+     *  - Read only attribute
+     *  - Owner attribute
+     *  - Creation/Modified/Last Accessed date, this is a before/after/same date filter
+     *  - Size, this is a mayor/minor/equal size filter
      * @param criteria
      * @param itemsList a list of Assets
      * @return Filtered list of Assets
@@ -152,6 +160,13 @@ public class Search implements ISearch {
                     .collect(Collectors.toList());
         }
 
+        if (criteria.getReadOnly() != null) {
+            filteredList = (List<StorageUnit>) filteredList.stream()
+                    .filter(item -> "File".equals(item.getType()))
+                    .filter(item -> criteria.getReadOnly() == ((File) item).getReadOnly())
+                    .collect(Collectors.toList());
+        }
+
         if (criteria.getHidden() != null) {
             filteredList = (List<StorageUnit>) filteredList.stream()
                     .filter(item -> item.getHidden() == criteria.getHidden())
@@ -161,6 +176,12 @@ public class Search implements ISearch {
         if (criteria.getOwner() != null && !criteria.getOwner().equals("")) {
             filteredList = (List<StorageUnit>) filteredList.stream()
                     .filter(item -> criteria.getOwner().equals(item.getOwner()))
+                    .collect(Collectors.toList());
+        }
+
+        if (criteria.getType() != null && !criteria.getType().equals("")) {
+            filteredList = (List<StorageUnit>) filteredList.stream()
+                    .filter(item -> criteria.getType().equals(item.getType()))
                     .collect(Collectors.toList());
         }
 
@@ -331,20 +352,22 @@ public class Search implements ISearch {
         Search test = new Search();
 
         SearchCriteria criteria = new SearchCriteria("/TrabajosLocal/stash/File_Search_B/src/test/java/com/fundation/search");
-        criteria.setSearchText("f");
-        criteria.setExtension("txt");
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-        try {
-            date = formatter.parse("2018-11-03");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        criteria.setAccessDate(">=", date);
-
-        criteria.setSize(">", new Long(1000));
+//        criteria.setSearchText("f");
+//        criteria.setExtension("txt");
+//
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        Date date = null;
+//        try {
+//            date = formatter.parse("2018-11-03");
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        criteria.setAccessDate(">=", date);
+//
+//        criteria.setSize(">", new Long(1000));
+//        criteria.setReadOnly(true);
+        criteria.setType("Folder");
         response = test.searchItems(criteria, null);
 
         System.out.println(response.size());

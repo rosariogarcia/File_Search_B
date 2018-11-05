@@ -14,7 +14,9 @@ public class SearchCriteria {
     protected String searchText;
     protected String extension;
     protected Boolean hidden;
+    protected Boolean readOnly;
     protected String owner;
+    protected String type;
     protected Map<Integer, Date> createdDate;
     protected Map<Integer, Date> modifiedDate;
     protected Map<Integer, Date> accessDate;
@@ -37,8 +39,16 @@ public class SearchCriteria {
         this.hidden = hidden;
     }
 
+    public void setReadOnly(Boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setExtension(String extension) {
@@ -174,8 +184,16 @@ public class SearchCriteria {
         return this.hidden;
     }
 
+    public Boolean getReadOnly() {
+        return this.readOnly;
+    }
+
     public String getOwner() {
         return this.owner;
+    }
+
+    public String getType() {
+        return this.type;
     }
 
     public String getExtension() {
