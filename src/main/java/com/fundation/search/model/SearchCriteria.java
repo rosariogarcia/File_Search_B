@@ -23,7 +23,7 @@ public class SearchCriteria {
     protected Map<Integer, Long> size;
 
     public SearchCriteria(String path) throws RuntimeException {
-        if (path != null) {
+        if (path != null && !path.equals("")) {
             this.path = path;
         }
         else {
