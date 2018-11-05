@@ -14,6 +14,7 @@
 package com.fundation.search.controller;
 
 import com.fundation.search.model.Search;
+import com.fundation.search.model.SearchCriteria;
 import com.fundation.search.model.StorageUnit;
 import com.fundation.search.view.View;
 
@@ -61,9 +62,13 @@ public class Controller {
             try {
                 String path = view.getPanel().getTextFieldPath();
                 String filename = view.getPanel().getFilename();
-                List<StorageUnit> itemsList = search.searchItems(path, filename, null);
+                SearchCriteria criteria = new SearchCriteria(path);
+
+                criteria.setSearchText(filename);
+                List<StorageUnit> itemsList = search.searchItems(criteria, null);
                 showResults(itemsList);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         });
@@ -78,8 +83,9 @@ public class Controller {
 
         DefaultTableModel model = (DefaultTableModel) view.getPanel().getTableResults().getModel();
         model.setRowCount(0);
+
         for (StorageUnit item : itemsList) {
-            String[] data = {item.getName(), item.getType(), item.getOwner(), item.getCreatedAt(), item.getUpdatedAt()};
+            String[] data = {item.getName(), item.getType(), item.getOwner(), item.getCreatedAt().toString(), item.getUpdatedAt().toString()};
             model.addRow(data);
         }
     }
