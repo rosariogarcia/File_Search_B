@@ -14,15 +14,20 @@ public class SearchCriteria {
     protected String searchText;
     protected String extension;
     protected Boolean hidden;
+    protected Boolean readOnly;
     protected String owner;
+    protected String type;
     protected Map<Integer, Date> createdDate;
     protected Map<Integer, Date> modifiedDate;
     protected Map<Integer, Date> accessDate;
     protected Map<Integer, Long> size;
 
-    public SearchCriteria(String path) {
+    public SearchCriteria(String path) throws RuntimeException {
         if (path != null) {
             this.path = path;
+        }
+        else {
+            throw new RuntimeException("A path is needed to create a SearchCriteria object");
         }
     }
 
@@ -34,19 +39,22 @@ public class SearchCriteria {
         this.hidden = hidden;
     }
 
+    public void setReadOnly(Boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setExtension(String extension) {
         this.extension = extension;
     }
 
-    /**
-     *
-     * @param operator
-     * @param createdDate
-     */
     public void setCreatedDate(String operator, Date createdDate) {
         this.createdDate = new HashMap<Integer, Date>();
 
@@ -176,8 +184,16 @@ public class SearchCriteria {
         return this.hidden;
     }
 
+    public Boolean getReadOnly() {
+        return this.readOnly;
+    }
+
     public String getOwner() {
         return this.owner;
+    }
+
+    public String getType() {
+        return this.type;
     }
 
     public String getExtension() {
