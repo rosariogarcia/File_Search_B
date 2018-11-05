@@ -27,5 +27,5 @@ public class View extends JFrame {
 
         return panel;
     }
-   
+
 }
