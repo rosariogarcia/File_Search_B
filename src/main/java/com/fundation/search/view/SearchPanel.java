@@ -391,11 +391,11 @@ public class SearchPanel extends JPanel {
     }
 
     public Date getModifiedDate() {
-        return modifiedDate.getCalendar();
+        return modifiedDate.getDate();
     }
 
     public Date getAccessedDate() {
-        return accessDate.getCalendar();
+        return accessDate.getDate();
     }
 
     public String getOptionExtension() {
