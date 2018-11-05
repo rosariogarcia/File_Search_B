@@ -1,7 +1,7 @@
 package com.fundation.search.view;
 
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 public class View extends JFrame {
 
@@ -28,5 +28,4 @@ public class View extends JFrame {
 
         return panel;
     }
-
 }
