@@ -33,6 +33,7 @@ public class SearchPanel extends JPanel {
 
     private JLabel labelExtension;
     private JTextField extension;
+    private JComboBox optionExtension;
 
     private JCheckBox readOnly;
 
@@ -157,9 +158,19 @@ public class SearchPanel extends JPanel {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         searchControls.add(labelExtension, constraints);
+        optionExtension = new JComboBox();
+        optionExtension.addItem("Mb");
+        optionExtension.addItem("Kb");
+        optionExtension.addItem("Gb");
+        optionExtension.setPreferredSize(new Dimension(70,20));
+        constraints.gridx = 1;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(optionExtension, constraints);
         extension = new JTextField();
         extension.setPreferredSize(new Dimension(70,20));
-        constraints.gridx = 1;
+        constraints.gridx = 2;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
@@ -363,10 +374,10 @@ public class SearchPanel extends JPanel {
     public Date getCreateDate(){
         return createDate.getDate();
     }
-    public Calendar getModifiedDate(){
+    public Date getModifiedDate(){
         return modifiedDate.getCalendar();
     }
-    public Calendar getAccessedDate(){
+    public Date getAccessedDate(){
         return accessDate.getCalendar();
     }
 
