@@ -62,14 +62,31 @@ public class Controller {
             try {
                 String path = view.getPanel().getTextFieldPath();
                 String filename = view.getPanel().getFilename();
+
                 SearchCriteria criteria = new SearchCriteria(path);
-                criteria.setExtension(view.getPanel().getExtension());
-                criteria.setHidden(view.getPanel().getHidden());
-                criteria.setOwner(view.getPanel().getOwner());
-                criteria.setCreatedDate(view.getPanel().getOptionSize(), view.getPanel().getCreateDate());
-                criteria.setModifiedDate(view.getPanel().getOptionSize(), view.getPanel().getModifiedDate());
-                criteria.setAccessDate(view.getPanel().getOptionSize(), view.getPanel().getAccessedDate());
-                criteria.setSize(view.getPanel().getOptionSize(), Validator.getAppropiateSize(view.getPanel().getSizeTextField(), view.getPanel().getSizeTextField()));
+                System.out.println("Print all data from view");
+
+                System.out.println("Path:" + view.getPanel().getTextFieldPath());
+                System.out.println("filename:" + view.getPanel().getFilename());
+                System.out.println("Size option:" + view.getPanel().getOptionSize());
+                System.out.println("Size text:" + view.getPanel().getSizeTextField());
+                System.out.println("Size type:" + view.getPanel().getOptionExtension());
+                System.out.println("Extens:" + view.getPanel().getExtension());
+                System.out.println("read:" + view.getPanel().getReadOnly());
+                System.out.println("hidden:" + view.getPanel().getHidden());
+                System.out.println("owner:" + view.getPanel().getOwner());
+                System.out.println("type:" + view.getPanel().getType());
+                System.out.println("create:" + view.getPanel().getCreateDate());
+                System.out.println("modified:" + view.getPanel().getModifiedDate());
+                System.out.println("update:" + view.getPanel().getAccessedDate());
+
+//                criteria.setExtension(view.getPanel().getExtension());
+//                criteria.setHidden(view.getPanel().getHidden());
+//                criteria.setOwner(view.getPanel().getOwner());
+//                criteria.setCreatedDate(view.getPanel().getOptionSize(), view.getPanel().getCreateDate());
+//                criteria.setModifiedDate(view.getPanel().getOptionSize(), view.getPanel().getModifiedDate());
+//                criteria.setAccessDate(view.getPanel().getOptionSize(), view.getPanel().getAccessedDate());
+//                criteria.setSize(view.getPanel().getOptionSize(), Validator.getAppropiateSize(view.getPanel().getSizeTextField(), view.getPanel().getSizeTextField()));
 
                 List<StorageUnit> itemsList = search.searchItems(criteria, null);
                 showResults(itemsList);
@@ -91,7 +108,16 @@ public class Controller {
         model.setRowCount(0);
 
         for (StorageUnit item : itemsList) {
-            String[] data = {item.getName(), item.getType(), item.getOwner(), item.getCreatedAt().toString(), item.getUpdatedAt().toString()};
+            String[] data = {
+                    item.getPath().toString(),
+                    item.getName(),
+                    item.getSize().toString(),
+                    item.getHidden().toString(),
+                    item.getOwner(),
+                    item.getType(),
+                    item.getCreatedAt().toString(),
+                    item.getUpdatedAt().toString(),
+                    item.getAccessedAt().toString()};
             model.addRow(data);
         }
     }
