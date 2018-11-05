@@ -50,12 +50,15 @@ public class SearchPanel extends JPanel {
 
     private JLabel labelCreateDate;
     private JCalendar createDate;
+    private JComboBox optionCreateDate;
 
     private JLabel labelModifiedDate;
     private JCalendar modifiedDate;
+    private JComboBox optionModifiedDate;
 
     private JLabel labelAccessedDate;
     private JCalendar accessDate;
+    private JComboBox optionAccessedDate;
 
     private JButton buttonSearch;
     private JButton buttonClose;
@@ -262,6 +265,18 @@ public class SearchPanel extends JPanel {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         searchControls.add(createDate, constraints);
+        optionCreateDate = new JComboBox();
+        optionCreateDate.addItem("<");
+        optionCreateDate.addItem(">");
+        optionCreateDate.addItem("==");
+        optionCreateDate.addItem(">=");
+        optionCreateDate.addItem("=<");
+        optionCreateDate.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 2;
+        constraints.gridy = 8;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(optionCreateDate, constraints);
 
         //Search files by Modified Date
         labelModifiedDate = new JLabel("Modified Date");
@@ -278,6 +293,18 @@ public class SearchPanel extends JPanel {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         searchControls.add(modifiedDate, constraints);
+        optionModifiedDate = new JComboBox();
+        optionModifiedDate.addItem("<");
+        optionModifiedDate.addItem(">");
+        optionModifiedDate.addItem("==");
+        optionModifiedDate.addItem(">=");
+        optionModifiedDate.addItem("=<");
+        optionModifiedDate.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 2;
+        constraints.gridy = 9;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(optionModifiedDate, constraints);
 
         //Search files by Accessed Date
         labelAccessedDate = new JLabel("Access Date");
@@ -294,6 +321,18 @@ public class SearchPanel extends JPanel {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         searchControls.add(accessDate, constraints);
+        optionModifiedDate = new JComboBox();
+        optionAccessedDate.addItem("<");
+        optionAccessedDate.addItem(">");
+        optionAccessedDate.addItem("==");
+        optionAccessedDate.addItem(">=");
+        optionAccessedDate.addItem("=<");
+        optionAccessedDate.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 2;
+        constraints.gridy = 10;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(optionAccessedDate, constraints);
 
         //General Browse button
         buttonSearch = new JButton("Search");
@@ -399,6 +438,16 @@ public class SearchPanel extends JPanel {
 
     public Date getAccessedDate() {
         return accessDate.getDate();
+    }
+
+    public String getOptionCreatedDate() {
+        return type.getSelectedItem().toString();
+    }
+    public String getOptionMidifiedDate() {
+        return type.getSelectedItem().toString();
+    }
+    public String getOptionAccessedDate() {
+        return type.getSelectedItem().toString();
     }
 
     public String getOptionExtension() {
