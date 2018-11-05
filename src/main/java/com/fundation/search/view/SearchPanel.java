@@ -1,8 +1,6 @@
 package com.fundation.search.view;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import com.toedter.calendar.JCalendar;
 import javafx.application.Application;
 import javafx.scene.control.DatePicker;
@@ -11,10 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import sun.util.calendar.JulianCalendar;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,21 +47,19 @@ public class SearchPanel extends JPanel {
     private JLabel labelType;
     private JComboBox type;
 
-
     private JLabel labelCreateDate;
+    private JCalendar createDate;
 
     private JLabel labelModifiedDate;
+    private JCalendar modifiedDate;
 
     private JLabel labelAccessedDate;
-    private JCalendar createDate;
-    private JCalendar modifiedDate;
     private JCalendar accessDate;
 
     private JButton buttonSearch;
     private JButton buttonClose;
 
     private JTable tableResults;
-
 
     public SearchPanel() {
         setting();
@@ -96,6 +90,7 @@ public class SearchPanel extends JPanel {
         constraints.gridheight = 1;
         searchControls.add(textFieldPath, constraints);
 
+        //Ptah Browse button
         buttonBrowse = new JButton("...");
         buttonBrowse.addActionListener(e -> {
             fileChooser = new JFileChooser();
@@ -116,7 +111,7 @@ public class SearchPanel extends JPanel {
         constraints.gridx = 2;
         constraints.gridy = 0;
         searchControls.add(buttonBrowse, constraints);
-
+        //File Name
         labelFilename = new JLabel("Filename:");
         constraints.gridx = 0;
         constraints.gridy = 1;
@@ -154,7 +149,6 @@ public class SearchPanel extends JPanel {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         searchControls.add(size, constraints);
-
         // end size
 
         // extension
@@ -172,11 +166,11 @@ public class SearchPanel extends JPanel {
         constraints.gridy = 3;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
-        searchControls.add(extension, constraints);        // end extension
+        searchControls.add(extension, constraints);
+        // end extension
 
         // checks
         readOnly = new JCheckBox("Read Only", false);
-        /*readOnly.setPreferredSize(new Dimension(70,25));*/
         constraints.gridx = 0;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
@@ -184,7 +178,6 @@ public class SearchPanel extends JPanel {
         searchControls.add(readOnly, constraints);
 
         hidden = new JCheckBox("Hidden", false);
-        /*hidden.setPreferredSize(new Dimension(70,25));*/
         constraints.gridx = 1;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
@@ -201,7 +194,6 @@ public class SearchPanel extends JPanel {
         constraints.gridheight = 1;
         searchControls.add(labelOwner, constraints);
 
-
         owner = new JTextField();
         owner.setPreferredSize(new Dimension(70,20));
         constraints.gridx = 1;
@@ -210,9 +202,6 @@ public class SearchPanel extends JPanel {
         constraints.gridheight = 1;
         searchControls.add(owner, constraints);
         // end owner
-
-
-
 
         // content
         labelContent = new JLabel("Content");
@@ -230,8 +219,6 @@ public class SearchPanel extends JPanel {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         searchControls.add(content, constraints);
-
-
         // end content
 
         //type
@@ -339,7 +326,7 @@ public class SearchPanel extends JPanel {
         add(north, BorderLayout.NORTH);
 
         String[][] data = {{"", ""}, {"", ""}};
-        String[] columns = {"Name", "Type", "Owner", "Create Date", "Modified Date"};
+        String[] columns = {"Path","File Name", "Size", "Extension", "Read Only", "Hidden", "Owner", "Content", "Type", "Created Date", "Modified Date", "Accessed Date"};
 
         DefaultTableModel model = new DefaultTableModel(data, columns);
 
