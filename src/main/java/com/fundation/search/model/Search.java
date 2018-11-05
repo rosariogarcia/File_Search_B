@@ -13,8 +13,6 @@ package com.fundation.search.model;/*
  * Version: 1.0
  */
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
@@ -34,6 +32,21 @@ public class Search implements ISearch {
     protected List<StorageUnit> itemsList = new ArrayList<>();
     protected Path path;
 
+    /**
+     * Search all items from within a valid path of a folder, uses a criteria object to filter the resulting list of
+     * AssetUnit(StorageUnit), the criteria filter is an AND filter that can filter items by:
+     *  - Partial string of a name
+     *  - File extension
+     *  - Hidden attribute
+     *  - Owner attribute
+     *  - Creation/Modified/Last Accessed date, this is a before/after/same date filter
+     *  - Size, this is a mayor/minor/equal size filter
+     *  TODO: Change the name of StorageUnit Class to AssetUnit
+     * @param criteria object
+     * @param limit integer, limits the list of items in the result
+     * @return List of Assets(StorageUnit) found inside the valid path of a folder sent inside the criteria
+     * @throws IOException
+     */
     public List<StorageUnit> searchItems(SearchCriteria criteria, Integer limit) throws IOException {
         this.itemsList.clear();
         limit = limit == null ? 100 : limit;
@@ -116,6 +129,18 @@ public class Search implements ISearch {
         return this.itemsList;
     }
 
+    /**
+     * Filters a list of Assets from a CriteriaSearch object, the criteria filter is an AND filter that can filter items by:
+     *      *  - Partial string of a name
+     *      *  - File extension
+     *      *  - Hidden attribute
+     *      *  - Owner attribute
+     *      *  - Creation/Modified/Last Accessed date, this is a before/after/same date filter
+     *      *  - Size, this is a mayor/minor/equal size filter
+     * @param criteria
+     * @param itemsList a list of Assets
+     * @return Filtered list of Assets
+     */
     public List<StorageUnit> filterByCriteria(SearchCriteria criteria, List<StorageUnit> itemsList) {
 
         List<StorageUnit> filteredList = itemsList;
@@ -166,6 +191,18 @@ public class Search implements ISearch {
         return filteredList;
     }
 
+    /**
+     * Compare 2 date objects, using a integer flag to select the operation:
+     *  - 0 for ==
+     *  - 1 for <
+     *  - 2 for >
+     *  - 3 for <=
+     *  - 4 for >=
+     * @param criteria a map with integer flag and the date to compare with
+     * @param item Asset item with the date to compare
+     * @param method the method from which to get the date to compare with
+     * @return
+     */
     public Boolean compareDates(Map<Integer, Date> criteria, StorageUnit item, String method) {
 
         Integer index = (int) criteria.keySet().toArray()[0];
@@ -219,6 +256,18 @@ public class Search implements ISearch {
         return false;
     }
 
+    /**
+     * Compare 2 Long numbers, using a integer flag to select the operation:
+     *  - 0 for ==
+     *  - 1 for <
+     *  - 2 for >
+     *  - 3 for <=
+     *  - 4 for >=
+     * @param criteria a map with integer flag and the long number to compare with
+     * @param item Asset item with the long number to compare
+     * @param method the method from which to get the long number to compare with
+     * @return
+     */
     public Boolean compareLongs(Map<Integer, Long> criteria, StorageUnit item, String method) {
 
         Integer index = (int) criteria.keySet().toArray()[0];

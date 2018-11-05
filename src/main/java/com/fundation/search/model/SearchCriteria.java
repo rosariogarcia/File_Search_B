@@ -20,9 +20,12 @@ public class SearchCriteria {
     protected Map<Integer, Date> accessDate;
     protected Map<Integer, Long> size;
 
-    public SearchCriteria(String path) {
+    public SearchCriteria(String path) throws RuntimeException {
         if (path != null) {
             this.path = path;
+        }
+        else {
+            throw new RuntimeException("A path is needed to create a SearchCriteria object");
         }
     }
 
@@ -42,11 +45,6 @@ public class SearchCriteria {
         this.extension = extension;
     }
 
-    /**
-     *
-     * @param operator
-     * @param createdDate
-     */
     public void setCreatedDate(String operator, Date createdDate) {
         this.createdDate = new HashMap<Integer, Date>();
 
