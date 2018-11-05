@@ -1,5 +1,6 @@
 package com.fundation.search.view;
 
+
 import javax.swing.*;
 
 public class View extends JFrame {
@@ -24,6 +25,8 @@ public class View extends JFrame {
     }
 
     public SearchPanel getPanel() {
+
         return panel;
     }
+
 }

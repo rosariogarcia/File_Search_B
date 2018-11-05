@@ -1,8 +1,24 @@
 package com.fundation.search.view;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import com.toedter.calendar.JCalendar;
+import javafx.application.Application;
+import javafx.scene.control.DatePicker;
+import javafx.util.converter.LocalDateStringConverter;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
+import sun.util.calendar.JulianCalendar;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.Date;
 
 public class SearchPanel extends JPanel {
 
@@ -20,6 +36,7 @@ public class SearchPanel extends JPanel {
 
     private JLabel labelExtension;
     private JTextField extension;
+    private JComboBox optionExtension;
 
     private JCheckBox readOnly;
 
@@ -34,7 +51,17 @@ public class SearchPanel extends JPanel {
     private JLabel labelType;
     private JComboBox type;
 
+    private JLabel labelCreateDate;
+    private JCalendar createDate;
+
+    private JLabel labelModifiedDate;
+    private JCalendar modifiedDate;
+
+    private JLabel labelAccessedDate;
+    private JCalendar accessDate;
+
     private JButton buttonSearch;
+    private JButton buttonClose;
 
     private JTable tableResults;
 
@@ -53,16 +80,22 @@ public class SearchPanel extends JPanel {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
 
+        //Search looking for a path
         labelPath = new JLabel("Path:");
         constraints.gridx = 0;
         constraints.gridy = 0;
-        constraints.insets = new Insets(0, 10, 0, 0);
+        constraints.insets = new Insets(5, 5, 0, 5);
         searchControls.add(labelPath, constraints);
         textFieldPath = new JTextField();
-        constraints.insets = new Insets(5, 0, 0, 10);
+        textFieldPath.setSize(150, 20);
+        constraints.insets = new Insets(2, 0, 0, 5);
         constraints.gridx = 1;
         constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
         searchControls.add(textFieldPath, constraints);
+
+        //Path Browse button
         buttonBrowse = new JButton("...");
         buttonBrowse.addActionListener(e -> {
             fileChooser = new JFileChooser();
@@ -84,84 +117,217 @@ public class SearchPanel extends JPanel {
         constraints.gridy = 0;
         searchControls.add(buttonBrowse, constraints);
 
+        //Search files by File Name
         labelFilename = new JLabel("Filename:");
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        searchControls.add(labelFilename, constraints);
+        filename = new JTextField();
+        filename.setPreferredSize(new Dimension(150, 20));
         constraints.gridx = 1;
         constraints.gridy = 1;
-        searchControls.add(labelFilename);
-        filename = new JTextField();
-        constraints.gridx = 2;
-        constraints.gridy = 1;
-        searchControls.add(filename);
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(filename, constraints);
 
-        // size
+        //Search files by Size
         labelSize = new JLabel("Size:");
-        searchControls.add(labelSize);
-
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        searchControls.add(labelSize, constraints);
         optionSize = new JComboBox();
         optionSize.addItem("<");
         optionSize.addItem(">");
         optionSize.addItem("==");
-        searchControls.add(optionSize);
-
+        optionSize.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 2;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(optionSize, constraints);
         size = new JTextField();
-        searchControls.add(size);
-        // end size
+        size.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 2;
+        constraints.gridy = 2;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(size, constraints);
 
-        // extension
+        // Search files by extension
         labelExtension = new JLabel("Extension");
-        searchControls.add(labelExtension);
-
+        labelExtension.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(labelExtension, constraints);
+        optionExtension = new JComboBox();
+        optionExtension.addItem("Mb");
+        optionExtension.addItem("Kb");
+        optionExtension.addItem("Gb");
+        optionExtension.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(optionExtension, constraints);
         extension = new JTextField();
-        searchControls.add(extension);
-        // end extension
+        extension.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 2;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(extension, constraints);
 
-        // checks
+        // Search read only files
         readOnly = new JCheckBox("Read Only", false);
-        searchControls.add(readOnly);
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(readOnly, constraints);
 
+        // Search Hidden files
         hidden = new JCheckBox("Hidden", false);
-        searchControls.add(hidden);
-        // end checks
+        constraints.gridx = 1;
+        constraints.gridy = 4;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(hidden, constraints);
 
-        // owner
+        // Search files by Owner
         labelOwner = new JLabel("Owner");
-        searchControls.add(labelOwner);
-
+        labelOwner.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 0;
+        constraints.gridy = 5;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(labelOwner, constraints);
         owner = new JTextField();
-        searchControls.add(owner);
-        // end owner
+        owner.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 5;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(owner, constraints);
 
-
-        // content
+        // Search files by Content
         labelContent = new JLabel("Content");
-        searchControls.add(labelContent);
-
+        labelContent.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 0;
+        constraints.gridy = 6;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(labelContent, constraints);
         content = new JTextField();
-        searchControls.add(content);
-        // end content
+        content.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 6;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(content, constraints);
 
-        //type
-        labelContent = new JLabel("Type");
-        searchControls.add(labelContent);
-
+        //Search files by type
+        labelType = new JLabel("Type");
+        labelType.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 0;
+        constraints.gridy = 7;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(labelType, constraints);
         type = new JComboBox();
         type.addItem("all");
         type.addItem("Folder");
         type.addItem("File");
-        searchControls.add(type);
-        // end type
+        type.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 7;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(type, constraints);
 
+        //Search files by Created Date
+        labelCreateDate = new JLabel("Created Date");
+        labelCreateDate.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 0;
+        constraints.gridy = 8;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(labelCreateDate, constraints);
+        createDate = new JCalendar();
+        createDate.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 8;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(createDate, constraints);
+
+        //Search files by Modified Date
+        labelModifiedDate = new JLabel("Modified Date");
+        labelModifiedDate.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 0;
+        constraints.gridy = 9;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(labelModifiedDate, constraints);
+        modifiedDate = new JCalendar();
+        modifiedDate.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 9;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(modifiedDate, constraints);
+
+        //Search files by Accessed Date
+        labelAccessedDate = new JLabel("Access Date");
+        labelAccessedDate.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 0;
+        constraints.gridy = 10;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(labelAccessedDate, constraints);
+        accessDate = new JCalendar();
+        accessDate.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 10;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(accessDate, constraints);
+
+        //General Browse button
         buttonSearch = new JButton("Search");
-        searchControls.add(buttonSearch);
+        buttonSearch.setPreferredSize(new Dimension(50, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 11;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(buttonSearch, constraints);
 
+        //Close button to finish searching
+        buttonClose = new JButton("Close");
+        buttonClose.setPreferredSize(new Dimension(70, 20));
+        buttonClose.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.exit(0);
+                    }
+                }
+        );
+        constraints.gridx = 2;
+        constraints.gridy = 11;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(buttonClose, constraints);
 
+        //Table to have search results
         JPanel north = new JPanel(new FlowLayout());
         north.add(searchControls);
-        north.setPreferredSize(new Dimension(500, 500));
+        north.setPreferredSize(new Dimension(300, 300));
         add(north, BorderLayout.NORTH);
 
         String[][] data = {{"", ""}, {"", ""}};
-        String[] columns = {"Name", "Type", "Owner", "Create Date", "Modified Date"};
+        String[] columns = {"Path", "File Name", "Size", "Extension", "Read Only", "Hidden", "Owner", "Content", "Type", "Created Date", "Modified Date", "Accessed Date"};
 
         DefaultTableModel model = new DefaultTableModel(data, columns);
 
@@ -200,11 +366,11 @@ public class SearchPanel extends JPanel {
         return extension.getText();
     }
 
-    public boolean getReadOnly() {
+    public Boolean getReadOnly() {
         return readOnly.isSelected();
     }
 
-    public boolean getHidden() {
+    public Boolean getHidden() {
         return hidden.isSelected();
     }
 
@@ -218,5 +384,21 @@ public class SearchPanel extends JPanel {
 
     public String getType() {
         return type.getSelectedItem().toString();
+    }
+
+    public Date getCreateDate() {
+        return createDate.getDate();
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate.getCalendar();
+    }
+
+    public Date getAccessedDate() {
+        return accessDate.getCalendar();
+    }
+
+    public String getOptionExtension() {
+        return optionExtension.getSelectedItem().toString();
     }
 }
