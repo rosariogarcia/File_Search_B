@@ -1,21 +1,27 @@
 package com.fundation.search.view;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import com.toedter.calendar.JCalendar;
-import javafx.application.Application;
-import javafx.scene.control.DatePicker;
-import javafx.util.converter.LocalDateStringConverter;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.layout.VBox;
-import sun.util.calendar.JulianCalendar;
 
-import javax.swing.JFrame;
+import com.toedter.calendar.JDateChooser;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
 import java.util.Date;
+
 
 public class SearchPanel extends JPanel {
 
@@ -42,26 +48,24 @@ public class SearchPanel extends JPanel {
     private JLabel labelOwner;
     private JTextField owner;
 
-    private JLabel labelContent;
-    private JTextField content;
-
     private JLabel labelType;
     private JComboBox type;
 
     private JLabel labelCreateDate;
-    private JCalendar createDate;
     private JComboBox optionCreateDate;
+    private JDateChooser dateChooser;
 
     private JLabel labelModifiedDate;
-    private JCalendar modifiedDate;
     private JComboBox optionModifiedDate;
+    private JDateChooser dateChooserM;
 
     private JLabel labelAccessedDate;
-    private JCalendar accessDate;
     private JComboBox optionAccessedDate;
+    private JDateChooser dateChooserA;
 
     private JButton buttonSearch;
     private JButton buttonClose;
+    private JButton buttonClear;
 
     private JTable tableResults;
 
@@ -76,6 +80,7 @@ public class SearchPanel extends JPanel {
 
     /**
      * Initialize components
+     *
      * @return
      */
     private void init() {
@@ -144,14 +149,24 @@ public class SearchPanel extends JPanel {
         optionSize.addItem(">");
         optionSize.addItem("==");
         optionSize.setPreferredSize(new Dimension(70, 20));
-        constraints.gridx = 1;
+        constraints.gridx = 2;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         searchControls.add(optionSize, constraints);
+        optionExtension = new JComboBox();
+        optionExtension.addItem("Mb");
+        optionExtension.addItem("Kb");
+        optionExtension.addItem("Gb");
+        optionExtension.setPreferredSize(new Dimension(70, 20));
+        constraints.gridx = 3;
+        constraints.gridy = 2;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(optionExtension, constraints);
         size = new JTextField();
         size.setPreferredSize(new Dimension(70, 20));
-        constraints.gridx = 2;
+        constraints.gridx = 1;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
@@ -165,19 +180,9 @@ public class SearchPanel extends JPanel {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         searchControls.add(labelExtension, constraints);
-        optionExtension = new JComboBox();
-        optionExtension.addItem("Mb");
-        optionExtension.addItem("Kb");
-        optionExtension.addItem("Gb");
-        optionExtension.setPreferredSize(new Dimension(70, 20));
-        constraints.gridx = 1;
-        constraints.gridy = 3;
-        constraints.gridwidth = 1;
-        constraints.gridheight = 1;
-        searchControls.add(optionExtension, constraints);
         extension = new JTextField();
         extension.setPreferredSize(new Dimension(70, 20));
-        constraints.gridx = 2;
+        constraints.gridx = 1;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
@@ -215,22 +220,6 @@ public class SearchPanel extends JPanel {
         constraints.gridheight = 1;
         searchControls.add(owner, constraints);
 
-        // Search files by Content
-        labelContent = new JLabel("Content");
-        labelContent.setPreferredSize(new Dimension(70, 20));
-        constraints.gridx = 0;
-        constraints.gridy = 6;
-        constraints.gridwidth = 1;
-        constraints.gridheight = 1;
-        searchControls.add(labelContent, constraints);
-        content = new JTextField();
-        content.setPreferredSize(new Dimension(70, 20));
-        constraints.gridx = 1;
-        constraints.gridy = 6;
-        constraints.gridwidth = 1;
-        constraints.gridheight = 1;
-        searchControls.add(content, constraints);
-
         //Search files by type
         labelType = new JLabel("Type");
         labelType.setPreferredSize(new Dimension(70, 20));
@@ -258,13 +247,13 @@ public class SearchPanel extends JPanel {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         searchControls.add(labelCreateDate, constraints);
-        createDate = new JCalendar();
-        createDate.setPreferredSize(new Dimension(70, 20));
+        JDateChooser dateChooser = new JDateChooser("yyyy/MM/dd", "####/##/##", '_');
+        dateChooser.setPreferredSize(new Dimension(70, 20));
         constraints.gridx = 1;
         constraints.gridy = 8;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
-        searchControls.add(createDate, constraints);
+        searchControls.add(dateChooser, constraints);
         optionCreateDate = new JComboBox();
         optionCreateDate.addItem("<");
         optionCreateDate.addItem(">");
@@ -286,13 +275,13 @@ public class SearchPanel extends JPanel {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         searchControls.add(labelModifiedDate, constraints);
-        modifiedDate = new JCalendar();
-        modifiedDate.setPreferredSize(new Dimension(70, 20));
+        JDateChooser dateChooserM = new JDateChooser("yyyy/MM/dd", "####/##/##", '_');
+        dateChooserM.setPreferredSize(new Dimension(70, 20));
         constraints.gridx = 1;
         constraints.gridy = 9;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
-        searchControls.add(modifiedDate, constraints);
+        searchControls.add(dateChooserM, constraints);
         optionModifiedDate = new JComboBox();
         optionModifiedDate.addItem("<");
         optionModifiedDate.addItem(">");
@@ -314,14 +303,14 @@ public class SearchPanel extends JPanel {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         searchControls.add(labelAccessedDate, constraints);
-        accessDate = new JCalendar();
-        accessDate.setPreferredSize(new Dimension(70, 20));
+        JDateChooser dateChooserA = new JDateChooser("yyyy/MM/dd", "####/##/##", '_');
+        dateChooserA.setPreferredSize(new Dimension(70, 20));
         constraints.gridx = 1;
         constraints.gridy = 10;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
-        searchControls.add(accessDate, constraints);
-        optionModifiedDate = new JComboBox();
+        searchControls.add(dateChooserA, constraints);
+        optionAccessedDate = new JComboBox();
         optionAccessedDate.addItem("<");
         optionAccessedDate.addItem(">");
         optionAccessedDate.addItem("==");
@@ -360,6 +349,32 @@ public class SearchPanel extends JPanel {
         constraints.gridheight = 1;
         searchControls.add(buttonClose, constraints);
 
+        //Clear all the components for a new search
+        buttonClear = new JButton("Clear");
+        buttonClear.setPreferredSize(new Dimension(70, 20));
+        buttonClear.addActionListener(
+                new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textFieldPath.setText("");
+                filename.setText("");
+                size.setText("");
+                extension.setText("");
+                owner.setText("");
+                readOnly.setSelected(false);
+                hidden.setSelected(false);
+                dateChooser.setCalendar(null);
+                dateChooserM.setCalendar(null);
+                dateChooserA.setCalendar(null);
+                
+            }
+        });
+        constraints.gridx = 0;
+        constraints.gridy = 11;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        searchControls.add(buttonClear, constraints);
+
         //Table to have search results
         JPanel north = new JPanel(new FlowLayout());
         north.add(searchControls);
@@ -380,6 +395,7 @@ public class SearchPanel extends JPanel {
 
     /**
      * return files by different options
+     *
      * @return
      */
     public String getTextFieldPath() {
@@ -389,9 +405,11 @@ public class SearchPanel extends JPanel {
     public JButton getButtonSearch() {
         return buttonSearch;
     }
+
     public String getFilename() {
         return filename.getText();
     }
+
     public JTable getTableResults() {
         return tableResults;
     }
@@ -420,32 +438,30 @@ public class SearchPanel extends JPanel {
         return owner.getText();
     }
 
-    public String getContent() {
-        return content.getText();
-    }
-
     public String getType() {
         return type.getSelectedItem().toString();
     }
 
-    public Date getCreateDate() {
-        return createDate.getDate();
+    public Date getCreatedDate() {
+        return dateChooser.getDate();
     }
 
     public Date getModifiedDate() {
-        return modifiedDate.getDate();
+        return dateChooserM.getDate();
     }
 
     public Date getAccessedDate() {
-        return accessDate.getDate();
+        return dateChooserA.getDate();
     }
 
     public String getOptionCreatedDate() {
         return type.getSelectedItem().toString();
     }
-    public String getOptionMidifiedDate() {
+
+    public String getOptionModifiedDate() {
         return type.getSelectedItem().toString();
     }
+
     public String getOptionAccessedDate() {
         return type.getSelectedItem().toString();
     }
