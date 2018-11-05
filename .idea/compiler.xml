@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="devfundamentals_main" target="1.8" />
+      <module name="devfundamentals_test" target="1.8" />
       <module name="File_Search_B_main" target="1.8" />
       <module name="File_Search_B_test" target="1.8" />
     </bytecodeTargetLevel>

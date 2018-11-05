@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/File_Search_B.iml" filepath="$PROJECT_DIR$/.idea/modules/File_Search_B.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/File_Search_B_main.iml" filepath="$PROJECT_DIR$/.idea/modules/File_Search_B_main.iml" group="File_Search_B" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/File_Search_B_test.iml" filepath="$PROJECT_DIR$/.idea/modules/File_Search_B_test.iml" group="File_Search_B" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/devfundamentals.iml" filepath="$PROJECT_DIR$/.idea/modules/devfundamentals.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/devfundamentals_main.iml" filepath="$PROJECT_DIR$/.idea/modules/devfundamentals_main.iml" group="devfundamentals" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/devfundamentals_test.iml" filepath="$PROJECT_DIR$/.idea/modules/devfundamentals_test.iml" group="devfundamentals" />
     </modules>
   </component>
 </project>
