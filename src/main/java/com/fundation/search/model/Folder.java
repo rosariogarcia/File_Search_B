@@ -24,6 +24,10 @@ public class Folder extends StorageUnit{
     protected List<File> files = new ArrayList<File>();
     protected List<Folder> subfolders = new ArrayList<Folder>();
 
+    /**
+     * TODO: Method that validates the path of a directory to check if it is a folder
+     * @throws IOException
+     */
     public void validatePath() throws IOException {
     }
 }

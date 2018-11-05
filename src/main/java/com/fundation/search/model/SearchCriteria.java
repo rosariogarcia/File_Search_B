@@ -14,22 +14,51 @@ public class SearchCriteria {
     protected String searchText;
     protected String extension;
     protected Boolean hidden;
+    protected Boolean readOnly;
     protected String owner;
+    protected String type;
     protected Map<Integer, Date> createdDate;
     protected Map<Integer, Date> modifiedDate;
     protected Map<Integer, Date> accessDate;
     protected Map<Integer, Long> size;
 
-    public SearchCriteria(String path) {
+    public SearchCriteria(String path) throws RuntimeException {
         if (path != null) {
             this.path = path;
         }
+        else {
+            throw new RuntimeException("A path is needed to create a SearchCriteria object");
+        }
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    public void setReadOnly(Boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 
     public void setCreatedDate(String operator, Date createdDate) {
         this.createdDate = new HashMap<Integer, Date>();
 
-        switch (operator) {
+        switch (operator){
             case "==":
                 this.createdDate.put(0, createdDate);
                 break;
@@ -58,7 +87,7 @@ public class SearchCriteria {
     public void setModifiedDate(String operator, Date modifiedDate) {
         this.modifiedDate = new HashMap<Integer, Date>();
 
-        switch (operator) {
+        switch (operator){
             case "==":
                 this.modifiedDate.put(0, modifiedDate);
                 break;
@@ -87,7 +116,7 @@ public class SearchCriteria {
     public void setAccessDate(String operator, Date accessDate) {
         this.accessDate = new HashMap<Integer, Date>();
 
-        switch (operator) {
+        switch (operator){
             case "==":
                 this.accessDate.put(0, accessDate);
                 break;
@@ -116,7 +145,7 @@ public class SearchCriteria {
     public void setSize(String operator, Long size) {
         this.size = new HashMap<Integer, Long>();
 
-        switch (operator) {
+        switch (operator){
             case "==":
                 this.size.put(0, size);
                 break;
@@ -142,12 +171,9 @@ public class SearchCriteria {
         }
     }
 
+
     public String getSearchText() {
         return this.searchText;
-    }
-
-    public void setSearchText(String searchText) {
-        this.searchText = searchText;
     }
 
     public String getPath() {
@@ -158,24 +184,20 @@ public class SearchCriteria {
         return this.hidden;
     }
 
-    public void setHidden(Boolean hidden) {
-        this.hidden = hidden;
+    public Boolean getReadOnly() {
+        return this.readOnly;
     }
 
     public String getOwner() {
         return this.owner;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public String getType() {
+        return this.type;
     }
 
     public String getExtension() {
         return this.extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
     }
 
     public Map<Integer, Date> getCreatedDate() {
