@@ -63,12 +63,17 @@ public class Controller {
                 String path = view.getPanel().getTextFieldPath();
                 String filename = view.getPanel().getFilename();
                 SearchCriteria criteria = new SearchCriteria(path);
+                criteria.setExtension(view.getPanel().getExtension());
+                criteria.setHidden(view.getPanel().getHidden());
+                criteria.setOwner(view.getPanel().getOwner());
+                criteria.setCreatedDate(view.getPanel().getCreateDate());
+                criteria.setModifiedDate(view.getPanel().getModifiedDate());
+                criteria.setAccessDate(view.getPanel().getAccessedDate());
+                criteria.setSize(view.getPanel().getOptionSize(), view.getPanel().getSizeTextField());
 
-                criteria.setSearchText(filename);
                 List<StorageUnit> itemsList = search.searchItems(criteria, null);
                 showResults(itemsList);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
@@ -77,7 +82,7 @@ public class Controller {
     /**
      * Sets table from View module to show results
      *
-     * @param itemsList     list    Contains data to show
+     * @param itemsList list    Contains data to show
      */
     public void showResults(List<StorageUnit> itemsList) {
 

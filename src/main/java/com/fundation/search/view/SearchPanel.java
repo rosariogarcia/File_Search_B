@@ -255,7 +255,7 @@ public class SearchPanel extends JPanel {
         constraints.gridheight = 1;
         searchControls.add(labelCreateDate, constraints);
         createDate = new JCalendar();
-        createDate.setPreferredSize(new Dimension(70, 20));
+//        createDate.setPreferredSize(new Dimension(70, 20));
         constraints.gridx = 1;
         constraints.gridy = 8;
         constraints.gridwidth = 1;
@@ -271,7 +271,7 @@ public class SearchPanel extends JPanel {
         constraints.gridheight = 1;
         searchControls.add(labelModifiedDate, constraints);
         modifiedDate = new JCalendar();
-        modifiedDate.setPreferredSize(new Dimension(70, 20));
+//        modifiedDate.setPreferredSize(new Dimension(70, 20));
         constraints.gridx = 1;
         constraints.gridy = 9;
         constraints.gridwidth = 1;
@@ -287,7 +287,7 @@ public class SearchPanel extends JPanel {
         constraints.gridheight = 1;
         searchControls.add(labelAccessedDate, constraints);
         accessDate = new JCalendar();
-        accessDate.setPreferredSize(new Dimension(70, 20));
+//        accessDate.setPreferredSize(new Dimension(70, 20));
         constraints.gridx = 1;
         constraints.gridy = 10;
         constraints.gridwidth = 1;
@@ -323,7 +323,7 @@ public class SearchPanel extends JPanel {
         //Table to have search results
         JPanel north = new JPanel(new FlowLayout());
         north.add(searchControls);
-        north.setPreferredSize(new Dimension(300, 300));
+        north.setPreferredSize(new Dimension(300, 600));
         add(north, BorderLayout.NORTH);
 
         String[][] data = {{"", ""}, {"", ""}};

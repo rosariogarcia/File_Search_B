@@ -26,31 +26,10 @@ public class SearchCriteria {
         }
     }
 
-    public void setSearchText(String searchText) {
-        this.searchText = searchText;
-    }
-
-    public void setHidden(Boolean hidden) {
-        this.hidden = hidden;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
-
-    /**
-     *
-     * @param operator
-     * @param createdDate
-     */
     public void setCreatedDate(String operator, Date createdDate) {
         this.createdDate = new HashMap<Integer, Date>();
 
-        switch (operator){
+        switch (operator) {
             case "==":
                 this.createdDate.put(0, createdDate);
                 break;
@@ -79,7 +58,7 @@ public class SearchCriteria {
     public void setModifiedDate(String operator, Date modifiedDate) {
         this.modifiedDate = new HashMap<Integer, Date>();
 
-        switch (operator){
+        switch (operator) {
             case "==":
                 this.modifiedDate.put(0, modifiedDate);
                 break;
@@ -108,7 +87,7 @@ public class SearchCriteria {
     public void setAccessDate(String operator, Date accessDate) {
         this.accessDate = new HashMap<Integer, Date>();
 
-        switch (operator){
+        switch (operator) {
             case "==":
                 this.accessDate.put(0, accessDate);
                 break;
@@ -137,7 +116,7 @@ public class SearchCriteria {
     public void setSize(String operator, Long size) {
         this.size = new HashMap<Integer, Long>();
 
-        switch (operator){
+        switch (operator) {
             case "==":
                 this.size.put(0, size);
                 break;
@@ -163,9 +142,12 @@ public class SearchCriteria {
         }
     }
 
-
     public String getSearchText() {
         return this.searchText;
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
     }
 
     public String getPath() {
@@ -176,12 +158,24 @@ public class SearchCriteria {
         return this.hidden;
     }
 
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
+    }
+
     public String getOwner() {
         return this.owner;
     }
 
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
     public String getExtension() {
         return this.extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 
     public Map<Integer, Date> getCreatedDate() {
