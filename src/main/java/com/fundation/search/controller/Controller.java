@@ -18,8 +18,11 @@ import com.fundation.search.model.SearchCriteria;
 import com.fundation.search.model.StorageUnit;
 import com.fundation.search.view.View;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,39 +61,51 @@ public class Controller {
      * from model module to get result of searching
      */
     private void buttonEvent() {
-        view.getPanel().getButtonSearch().addActionListener(e1 -> {
+        view.getPanel().getButtonSearch().addActionListener((ActionEvent e1) -> {
+            SearchCriteria criteria;
             try {
+
                 String path = view.getPanel().getTextFieldPath();
                 String filename = view.getPanel().getFilename();
+                String optionSize = view.getPanel().getOptionSize();
+                String size = view.getPanel().getSizeTextField();
+                System.out.println(size);
+                String typeSize = view.getPanel().getTypeSize();
+                String extension = view.getPanel().getExtension();
+                Boolean readOnly = view.getPanel().getReadOnly();
+                Boolean hidden = view.getPanel().getHidden();
+                String owner = view.getPanel().getOwner();
+                String type = view.getPanel().getType();
+                Date createdDate = view.getPanel().getCreatedDate();
+                String optionCreatedDate = view.getPanel().getOptionCreatedDate();
+                Date modifiedDate = view.getPanel().getModifiedDate();
+                String optionModifiedDate = view.getPanel().getOptionModifiedDate();
+                Date accessedDate = view.getPanel().getAccessedDate();
+                String optionAccessedDate = view.getPanel().getOptionAccessedDate();
 
-                SearchCriteria criteria = new SearchCriteria(path);
-                System.out.println("Print all data from view");
+                if (Validator.validatePathNotNull(path)) {
+                    criteria = new SearchCriteria(path);
 
-                System.out.println("Path:" + view.getPanel().getTextFieldPath());
-                System.out.println("filename:" + view.getPanel().getFilename());
-                System.out.println("Size option:" + view.getPanel().getOptionSize());
-                System.out.println("Size text:" + view.getPanel().getSizeTextField());
-                System.out.println("Size type:" + view.getPanel().getOptionExtension());
-                System.out.println("Extens:" + view.getPanel().getExtension());
-                System.out.println("read:" + view.getPanel().getReadOnly());
-                System.out.println("hidden:" + view.getPanel().getHidden());
-                System.out.println("owner:" + view.getPanel().getOwner());
-                System.out.println("type:" + view.getPanel().getType());
-                System.out.println("create:" + view.getPanel().getCreateDate());
-                System.out.println("modified:" + view.getPanel().getModifiedDate());
-                System.out.println("update:" + view.getPanel().getAccessedDate());
+                    if (type != "all")
+                        criteria.setType(type);
+                    criteria.setSearchText(filename);
+//                    criteria.setExtension(view.getPanel().getExtension());
 
-//                criteria.setExtension(view.getPanel().getExtension());
-//                criteria.setHidden(view.getPanel().getHidden());
-//                criteria.setOwner(view.getPanel().getOwner());
-//                criteria.setCreatedDate(view.getPanel().getOptionSize(), view.getPanel().getCreateDate());
-//                criteria.setModifiedDate(view.getPanel().getOptionSize(), view.getPanel().getModifiedDate());
-//                criteria.setAccessDate(view.getPanel().getOptionSize(), view.getPanel().getAccessedDate());
-//                criteria.setSize(view.getPanel().getOptionSize(), Validator.getAppropiateSize(view.getPanel().getSizeTextField(), view.getPanel().getSizeTextField()));
+                    if (!size.isEmpty())
+                        criteria.setSize(optionSize, Validator.getAppropiateSize(size, typeSize));
+                    criteria.setHidden(hidden);
+                    criteria.setOwner(owner);
+                    criteria.setCreatedDate(optionCreatedDate, createdDate);
+                    criteria.setModifiedDate(optionModifiedDate, modifiedDate);
+                    criteria.setAccessDate(optionAccessedDate, accessedDate);
 
-                List<StorageUnit> itemsList = search.searchItems(criteria, null);
-                showResults(itemsList);
+                    List<StorageUnit> itemsList = search.searchItems(criteria, null);
+                    showResults(itemsList);
+                }
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Invalid value "+ e.getMessage());
                 e.printStackTrace();
             }
         });
@@ -106,12 +121,13 @@ public class Controller {
 
         DefaultTableModel model = (DefaultTableModel) view.getPanel().getTableResults().getModel();
         model.setRowCount(0);
-
         for (StorageUnit item : itemsList) {
             String[] data = {
                     item.getPath().toString(),
                     item.getName(),
-                    item.getSize().toString(),
+                    "",
+                    "",
+                    "",
                     item.getHidden().toString(),
                     item.getOwner(),
                     item.getType(),
