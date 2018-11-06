@@ -22,9 +22,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 
-
 public class SearchPanel extends JPanel {
-
+    /**
+     * Declare, labels, text fields, combo boxes, etc.
+     *
+     * @autor Cristina Valenzuela
+     */
     private JLabel labelPath;
     private JTextField textFieldPath;
     private JButton buttonBrowse;
@@ -69,6 +72,11 @@ public class SearchPanel extends JPanel {
 
     private JTable tableResults;
 
+    /**
+     * Used Methods for this view
+     *
+     * @autor Cristina Valenzuela
+     */
     public SearchPanel() {
         setting();
         init();
@@ -81,7 +89,7 @@ public class SearchPanel extends JPanel {
     /**
      * Initialize components
      *
-     * @return
+     * @autor Cristina Valenzuela
      */
     private void init() {
 
@@ -148,6 +156,8 @@ public class SearchPanel extends JPanel {
         optionSize.addItem("<");
         optionSize.addItem(">");
         optionSize.addItem("==");
+        optionSize.addItem(">=");
+        optionSize.addItem("<=");
         optionSize.setPreferredSize(new Dimension(70, 20));
         constraints.gridx = 2;
         constraints.gridy = 2;
@@ -366,7 +376,7 @@ public class SearchPanel extends JPanel {
                 dateChooser.setCalendar(null);
                 dateChooserM.setCalendar(null);
                 dateChooserA.setCalendar(null);
-                
+
             }
         });
         constraints.gridx = 0;
@@ -382,7 +392,7 @@ public class SearchPanel extends JPanel {
         add(north, BorderLayout.NORTH);
 
         String[][] data = {{"", ""}, {"", ""}};
-        String[] columns = {"Path", "File Name", "Size", "Extension", "Read Only", "Hidden", "Owner", "Content", "Type", "Created Date", "Modified Date", "Accessed Date"};
+        String[] columns = {"Path", "File Name", "Size", "Extension", "Read Only", "Hidden", "Owner", "Type", "Created Date", "Modified Date", "Accessed Date"};
 
         DefaultTableModel model = new DefaultTableModel(data, columns);
 
