@@ -13,6 +13,7 @@
 
 package com.fundation.search.controller;
 
+import com.fundation.search.model.File;
 import com.fundation.search.model.Search;
 import com.fundation.search.model.SearchCriteria;
 import com.fundation.search.model.StorageUnit;
@@ -86,18 +87,24 @@ public class Controller {
                 if (Validator.validatePathNotNull(path)) {
                     criteria = new SearchCriteria(path);
 
+                    if (readOnly == true)
+                        criteria.setReadOnly(readOnly);
+
                     if (type != "all")
                         criteria.setType(type);
                     criteria.setSearchText(filename);
-//                    criteria.setExtension(view.getPanel().getExtension());
+                    criteria.setExtension(extension);
 
                     if (!size.isEmpty())
                         criteria.setSize(optionSize, Validator.getAppropiateSize(size, typeSize));
                     criteria.setHidden(hidden);
                     criteria.setOwner(owner);
-                    criteria.setCreatedDate(optionCreatedDate, createdDate);
-                    criteria.setModifiedDate(optionModifiedDate, modifiedDate);
-                    criteria.setAccessDate(optionAccessedDate, accessedDate);
+                    if (createdDate != null)
+                        criteria.setCreatedDate(optionCreatedDate, createdDate);
+                    if (modifiedDate != null)
+                        criteria.setModifiedDate(optionModifiedDate, modifiedDate);
+                    if (accessedDate != null)
+                        criteria.setAccessDate(optionAccessedDate, accessedDate);
 
                     List<StorageUnit> itemsList = search.searchItems(criteria, null);
                     showResults(itemsList);
@@ -125,9 +132,9 @@ public class Controller {
             String[] data = {
                     item.getPath().toString(),
                     item.getName(),
-                    "",
-                    "",
-                    "",
+                    (item.getSize() == null) ? "" : item.getSize().toString(),
+                    (item.getType() == "File") ? ((File) item).getExtension() : "",
+                    (item.getType() == "File") ? ((File) item).getReadOnly().toString() : "",
                     item.getHidden().toString(),
                     item.getOwner(),
                     item.getType(),
