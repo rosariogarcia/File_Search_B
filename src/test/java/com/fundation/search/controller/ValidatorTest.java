@@ -1,17 +1,26 @@
 package com.fundation.search.controller;
 
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
 public class ValidatorTest {
 
-    public boolean isValidPath(String path){
-
-        String[] volumes = getAvailableVolumes();
-
-
-        return true;
+    @Test
+    public void verifyKilobytesToBytes() {
+        long expected = 1024;
+        assertEquals(expected, Validator.getAppropiateSize("1", "Kb"));
     }
 
-    private String[] getAvailableVolumes() {
+    @Test
+    public void verifyMegabytesToBytes() {
+        long expected = 1024 * 1024;
+        assertEquals(expected, Validator.getAppropiateSize("1", "Mb"));
+    }
 
-        return new String[0];
+    @Test
+    public void verifyGigabytesToBytes() {
+        long expected = 1024 * 1024 * 1024;
+        assertEquals(expected, Validator.getAppropiateSize("1", "Gb"));
     }
 }
