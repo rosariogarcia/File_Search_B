@@ -70,7 +70,7 @@ public class SearchPanel extends JPanel {
     private JButton buttonClose;
     private JButton buttonClear;
 
-    private JTable tableResults;
+     private JTable tableResults;
 
     /**
      * Used Methods for this view
@@ -376,6 +376,8 @@ public class SearchPanel extends JPanel {
                 dateChooser.setCalendar(null);
                 dateChooserM.setCalendar(null);
                 dateChooserA.setCalendar(null);
+                
+
 
             }
         });
